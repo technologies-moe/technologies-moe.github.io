@@ -3,8 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>technologies.moe</title>
-  <meta name="description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
+  <title>technologies.moe - AI・GPU・LLMの技術同人誌サークル</title>
+  <meta name="description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル。設計思想・トレードオフ・実測結果をきちんと書きます。">
+  <meta name="keywords" content="技術同人誌,AI,GPU,LLM,CUDA,マルチエージェント,分散システム,技術書典,コミックマーケット">
+  <meta name="author" content="technologies.moe">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.technologies.moe/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.technologies.moe/">
+  <meta property="og:title" content="technologies.moe - AI・GPU・LLMの技術同人誌サークル">
+  <meta property="og:description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
+  <meta property="og:site_name" content="technologies.moe">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://www.technologies.moe/">
+  <meta name="twitter:title" content="technologies.moe - AI・GPU・LLMの技術同人誌サークル">
+  <meta name="twitter:description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "technologies.moe",
+    "url": "https://www.technologies.moe",
+    "description": "AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル",
+    "sameAs": [
+      "https://github.com/technologies-moe"
+    ]
+  }
+  </script>
+
   <style>
     :root {
       --bg: #0a0a0f;
@@ -375,9 +408,9 @@
       </div>
     </header>
 
-    <div class="container">
-      <section>
-        <h2>About</h2>
+    <main class="container">
+      <section id="about" aria-labelledby="about-heading">
+        <h2 id="about-heading">About</h2>
         <p>
           AI・GPU・LLM・分散システムなど、<span class="emphasis">「なぜそうなっているのか」「どこが限界で、どこに余地があるのか」</span>を重視した技術同人誌を制作しています。
         </p>
@@ -386,8 +419,8 @@
         </p>
       </section>
 
-      <section>
-        <h2>Themes</h2>
+      <section id="themes" aria-labelledby="themes-heading">
+        <h2 id="themes-heading">Themes</h2>
         <div class="themes-grid">
           <div class="theme-card">
             <p>LLM / マルチエージェント設計<br><small style="color: var(--text-muted)">MAS, Orchestration</small></p>
@@ -404,8 +437,8 @@
         </div>
       </section>
 
-      <section>
-        <h2>Stance</h2>
+      <section id="stance" aria-labelledby="stance-heading">
+        <h2 id="stance-heading">Stance</h2>
         <div class="stance">
           <div class="stance-item">
             <p>実装と理論の両立</p>
@@ -419,8 +452,8 @@
         </div>
       </section>
 
-      <section>
-        <h2>For</h2>
+      <section id="for" aria-labelledby="for-heading">
+        <h2 id="for-heading">For</h2>
         <ul>
           <li>仕組みを知りたいエンジニア</li>
           <li>論文と実装のギャップに悩んでいる人</li>
@@ -428,37 +461,37 @@
         </ul>
       </section>
 
-      <section>
-        <h2>Activities</h2>
+      <section id="activities" aria-labelledby="activities-heading">
+        <h2 id="activities-heading">Activities</h2>
         <div class="activities">
           <span class="tag">技術書典</span>
           <span class="tag">コミックマーケット</span>
-          <a href="https://github.com/technologies-moe" target="_blank" class="tag">GitHub</a>
+          <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="tag">GitHub</a>
         </div>
       </section>
 
-      <section>
-        <h2>Members</h2>
+      <section id="members" aria-labelledby="members-heading">
+        <h2 id="members-heading">Members</h2>
         <div class="members">
           <div class="member-card">
             <img src="https://github.com/m96-chan.png" alt="m96-chan" class="member-avatar">
             <div class="member-info">
               <h3>m96-chan</h3>
               <div class="member-links">
-                <a href="https://github.com/m96-chan" target="_blank">GitHub</a>
-                <a href="https://m96-chan.dev" target="_blank">Web</a>
+                <a href="https://github.com/m96-chan" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://m96-chan.dev" target="_blank" rel="noopener">Web</a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="join-us">
-        <h2>Join Us</h2>
+      <section id="join" class="join-us" aria-labelledby="join-heading">
+        <h2 id="join-heading">Join Us</h2>
         <p>技術同人誌の執筆に興味がある方、一緒に活動しませんか？</p>
-        <a href="https://github.com/technologies-moe" target="_blank" class="join-button">Contact via GitHub</a>
+        <a href="https://github.com/technologies-moe" target="_blank" class="join-button" rel="noopener">Contact via GitHub</a>
       </section>
-    </div>
+    </main>
 
     <footer>
       <p>&copy; technologies.moe</p>
