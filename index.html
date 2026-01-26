@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>technologies.moe</title>
+  <meta name="description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-secondary: rgba(22, 27, 34, 0.8);
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #00d4ff;
+      --accent-secondary: #7b2cbf;
+      --border: rgba(48, 54, 61, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #00d4ff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient 4s ease infinite;
+    }
+
+    @keyframes gradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero .tagline {
+      font-size: 1.3rem;
+      color: #ffffff;
+      max-width: 600px;
+      margin-bottom: 3rem;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4), 0 0 60px rgba(123, 44, 191, 0.3);
+      font-weight: 500;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      animation: bounce 2s ease infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--accent);
+      opacity: 0.6;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+      padding: 2.5rem;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    h2::before {
+      content: "";
+      width: 4px;
+      height: 1.4rem;
+      background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+      border-radius: 2px;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .emphasis {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      padding: 0.6rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-muted);
+    }
+
+    li::before {
+      content: "›";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .theme-card {
+      padding: 1.25rem;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-card:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--accent);
+    }
+
+    .theme-card p {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .stance {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .stance-item {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      transition: all 0.3s ease;
+    }
+
+    .stance-item:hover {
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.15) 0%, transparent 100%);
+      padding-left: 2rem;
+    }
+
+    .stance-item p {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .activities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .tag {
+      background: rgba(123, 44, 191, 0.2);
+      border: 1px solid rgba(123, 44, 191, 0.4);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(123, 44, 191, 0.3);
+      border-color: var(--accent-secondary);
+      transform: scale(1.05);
+    }
+
+    a.tag {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .member-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .member-card:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .member-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .member-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .member-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .member-links a {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .member-links a:hover {
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    .join-us {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 44, 191, 0.1) 100%);
+    }
+
+    .join-us p {
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .join-button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .join-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero .tagline {
+        font-size: 1.1rem;
+      }
+
+      .container {
+        padding: 2rem 1rem;
+      }
+
+      section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header class="hero">
+      <h1>technologies.moe</h1>
+      <p class="tagline">ブラックボックス化しがちな技術を、ちゃんと理解できる形で残す</p>
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
+      </div>
+    </header>
+
+    <div class="container">
+      <section>
+        <h2>About</h2>
+        <p>
+          AI・GPU・LLM・分散システムなど、<span class="emphasis">「なぜそうなっているのか」「どこが限界で、どこに余地があるのか」</span>を重視した技術同人誌を制作しています。
+        </p>
+        <p>
+          流行り言葉や魔法のような説明は控えめ。代わりに、設計思想・トレードオフ・実測結果をきちんと書きます。
+        </p>
+      </section>
+
+      <section>
+        <h2>Themes</h2>
+        <div class="themes-grid">
+          <div class="theme-card">
+            <p>LLM / マルチエージェント設計<br><small style="color: var(--text-muted)">MAS, Orchestration</small></p>
+          </div>
+          <div class="theme-card">
+            <p>GPUアーキテクチャ・高速化<br><small style="color: var(--text-muted)">CUDA, FlashAttention</small></p>
+          </div>
+          <div class="theme-card">
+            <p>AI安全性・評価・実験設計</p>
+          </div>
+          <div class="theme-card">
+            <p>「AIは魔法ではない」系の分解解説</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Stance</h2>
+        <div class="stance">
+          <div class="stance-item">
+            <p>実装と理論の両立</p>
+          </div>
+          <div class="stance-item">
+            <p>「動いた」だけで終わらせない</p>
+          </div>
+          <div class="stance-item">
+            <p>未来の自分が読み返しても耐える資料作り</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>For</h2>
+        <ul>
+          <li>仕組みを知りたいエンジニア</li>
+          <li>論文と実装のギャップに悩んでいる人</li>
+          <li>「結局それ、どこがボトルネック？」が気になる人</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Activities</h2>
+        <div class="activities">
+          <span class="tag">技術書典</span>
+          <span class="tag">コミックマーケット</span>
+          <a href="https://github.com/technologies-moe" target="_blank" class="tag">GitHub</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>Members</h2>
+        <div class="members">
+          <div class="member-card">
+            <img src="https://github.com/m96-chan.png" alt="m96-chan" class="member-avatar">
+            <div class="member-info">
+              <h3>m96-chan</h3>
+              <div class="member-links">
+                <a href="https://github.com/m96-chan" target="_blank">GitHub</a>
+                <a href="https://m96-chan.dev" target="_blank">Web</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="join-us">
+        <h2>Join Us</h2>
+        <p>技術同人誌の執筆に興味がある方、一緒に活動しませんか？</p>
+        <a href="https://github.com/technologies-moe" target="_blank" class="join-button">Contact via GitHub</a>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; technologies.moe</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Three.js Background
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // Particles
+    const particleCount = 1500;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+
+    const color1 = new THREE.Color(0x00d4ff);
+    const color2 = new THREE.Color(0x7b2cbf);
+
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 50;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+
+      const mixRatio = Math.random();
+      const color = color1.clone().lerp(color2, mixRatio);
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
+
+      sizes[i] = Math.random() * 2 + 0.5;
+    }
+
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const particleMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 0 },
+        pixelRatio: { value: renderer.getPixelRatio() }
+      },
+      vertexShader: `
+        attribute float size;
+        attribute vec3 color;
+        varying vec3 vColor;
+        uniform float time;
+        uniform float pixelRatio;
+
+        void main() {
+          vColor = color;
+          vec3 pos = position;
+          pos.y += sin(time * 0.5 + position.x * 0.1) * 0.5;
+          pos.x += cos(time * 0.3 + position.z * 0.1) * 0.5;
+
+          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+          gl_PointSize = size * pixelRatio * (300.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+
+          float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+          gl_FragColor = vec4(vColor, alpha * 0.8);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    // Lines connecting nearby particles
+    const linesMaterial = new THREE.LineBasicMaterial({
+      color: 0x00d4ff,
+      transparent: true,
+      opacity: 0.1
+    });
+
+    const linesGeometry = new THREE.BufferGeometry();
+    const linePositions = [];
+    const maxDistance = 5;
+
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const dx = positions[i * 3] - positions[j * 3];
+        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist < maxDistance && linePositions.length < 10000 * 6) {
+          linePositions.push(
+            positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
+            positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
+          );
+        }
+      }
+    }
+
+    linesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+    const lines = new THREE.LineSegments(linesGeometry, linesMaterial);
+    scene.add(lines);
+
+    camera.position.z = 30;
+
+    // Mouse interaction
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // Animation
+    let time = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.01;
+
+      particleMaterial.uniforms.time.value = time;
+
+      particles.rotation.y = time * 0.05 + mouseX * 0.3;
+      particles.rotation.x = mouseY * 0.2;
+      lines.rotation.y = time * 0.05 + mouseX * 0.3;
+      lines.rotation.x = mouseY * 0.2;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Scroll parallax
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      camera.position.z = 30 + scrollY * 0.02;
+    });
+  </script>
+</body>
+</html>
