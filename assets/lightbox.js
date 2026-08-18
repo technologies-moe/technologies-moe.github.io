@@ -10,18 +10,26 @@
   const cap = box.querySelector('.cap');
   let opener = null;
 
+  /* the rest of the page goes inert while the sheet is up, so Tab stays inside
+     the dialog and the page behind is not announced */
+  const seal = (on) => {
+    for (const el of document.body.children) el.inert = on && el !== box;
+  };
+
   const open = (btn) => {
     opener = btn;
     img.src = btn.dataset.full;
     img.alt = btn.dataset.alt || '';
     cap.textContent = btn.dataset.cap || '';
     box.classList.add('on');
+    seal(true);
     document.body.style.overflow = 'hidden';
     box.querySelector('.close').focus();
   };
 
   const close = () => {
     box.classList.remove('on');
+    seal(false);
     document.body.style.overflow = '';
     // drop the bitmap so a long gallery session does not pile up in memory
     img.removeAttribute('src');

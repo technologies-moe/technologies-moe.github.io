@@ -1,0 +1,7 @@
+# secret.html と tune.html は Disallow しない。
+# クロールを禁じるとページ内の noindex を読んでもらえず、外部リンク経由で
+# 逆にインデックスされうるため、両ページの meta robots に任せている。
+User-agent: *
+Allow: /
+
+Sitemap: https://www.technologies.moe/sitemap.xml

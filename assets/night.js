@@ -27,8 +27,18 @@ window.Night = (function () {
   };
   const MAX_MISS = 3;
 
-  let root, box, zapper, over, miss = 0, opened = false;
+  let root, zapper, over, miss = 0, opened = false;
   const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* While a dialog is up, everything else in <body> goes inert: Tab cannot walk
+     out of it and screen readers stop announcing the page behind. Escape and a
+     first-element focus alone did not stop a keyboard user wandering off. */
+  const seal = (keep) => {
+    for (const el of document.body.children) el.inert = el !== keep;
+  };
+  const unseal = () => {
+    for (const el of document.body.children) el.inert = false;
+  };
   const shuffle = (a) => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(p => p[1]);
 
   /* ---------- shell ---------- */
@@ -63,6 +73,7 @@ window.Night = (function () {
     opened = true;
     document.body.style.overflow = 'hidden';
     root.classList.add('on');
+    seal(root);
     ask();
   }
 
@@ -71,6 +82,7 @@ window.Night = (function () {
     opened = false;
     root.classList.remove('on', 'zap', 'shot');
     document.body.style.overflow = '';
+    unseal();
     setTimeout(() => { if (!opened) root.textContent = ''; }, 400);
   }
 
@@ -192,6 +204,8 @@ window.Night = (function () {
       `preserveAspectRatio="xMidYMin slice">${drips}${spots}</svg></div>` +
       `<div class="go" role="button" tabindex="0">GAME OVER<small>CLICK TO RESET</small></div>`;
     over.classList.add('on');
+    over.removeAttribute('aria-hidden');
+    seal(over);                            // close() unsealed on the way in here
     const go = () => location.reload();
     over.addEventListener('click', go);
     over.querySelector('.go').addEventListener('keydown', (e) => {

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="technologies.moe">
+  <!-- The room is full of cats, so the mark is one. Shapes are deliberately
+       blunt — pointed ears, round eyes, no whiskers — because the tab renders
+       this at 16px, where an X-eyed cat (Alibi's own motif) smears into a bar. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff3d92"/>
+      <stop offset="1" stop-color="#b8a2d8"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <g fill="#fff">
+    <path d="M12 31 L9 6 L31 20 Z"/>
+    <path d="M52 31 L55 6 L33 20 Z"/>
+    <ellipse cx="32" cy="40" rx="20" ry="16"/>
+  </g>
+  <g fill="#7a2f5e">
+    <circle cx="23" cy="38" r="4.2"/>
+    <circle cx="41" cy="38" r="4.2"/>
+  </g>
+</svg>

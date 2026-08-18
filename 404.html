@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>404 — technologies.moe</title>
+<meta name="description" content="そのページは見つかりませんでした。">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#faf5fb">
+
+<link rel="stylesheet" href="/assets/doc.css">
+<style>
+/* the page is one screen, so it centres rather than scrolls */
+.wrap{min-height:100svh; display:grid; align-content:center}
+.code{
+  font-size:clamp(4.5rem,20vw,11rem);
+  font-weight:900; letter-spacing:-.06em; line-height:.9;
+  background:linear-gradient(135deg,var(--pink),var(--lav));
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  margin-bottom:.4rem;
+}
+.said{
+  font-size:clamp(1.05rem,3vw,1.4rem); font-weight:700;
+  padding-left:1.1rem; border-left:3px solid var(--pink);
+  margin:1.6rem 0 .6rem;
+}
+.said span{
+  display:block; margin-top:.5rem;
+  font-size:.76rem; font-weight:700; letter-spacing:.18em; color:var(--ink-soft);
+}
+.go{display:flex; flex-wrap:wrap; gap:.7rem; margin-top:2.2rem}
+.go a{
+  text-decoration:none; color:inherit;
+  border:1px solid var(--line); border-radius:999px;
+  padding:.6rem 1.3rem;
+  font-size:.9rem; font-weight:700;
+  transition:border-color .25s, transform .25s, background .25s;
+}
+.go a:hover{border-color:rgba(255,61,146,.55); background:var(--panel); transform:translateY(-2px)}
+.go a.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
+.go a.primary:hover{background:var(--pink); border-color:var(--pink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="eyebrow">404 / NOT FOUND</span>
+  <p class="code">404</p>
+  <h1 style="font-size:clamp(1.3rem,4vw,2rem)">そのページは無いみたい。</h1>
+
+  <p class="said">「んー、そこ何も置いてないよ。<br>……で、何探してたんだっけ？」
+    <span>— ALIBI</span></p>
+
+  <p class="sub">URL が変わったか、もともと存在しないページです。下から探しなおしてください。</p>
+
+  <div class="go">
+    <a href="/" class="primary">部屋に戻る</a>
+    <a href="/#c109">C109 の新刊</a>
+    <a href="/alibi.html">Alibi 設定資料</a>
+    <a href="/#join">Join Us</a>
+  </div>
+
+  <footer>
+    <span>&copy; technologies.moe</span>
+    <a href="/">← technologies.moe</a>
+  </footer>
+
+</div>
+</body>
+</html>
