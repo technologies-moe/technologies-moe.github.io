@@ -40,6 +40,30 @@
   background:var(--pink); color:#fff;
   font-size:.68rem; font-weight:800;
 }
+.cuts{
+  display:grid; gap:.9rem;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+}
+figure.cut{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  transition:border-color .3s, transform .3s;
+}
+figure.cut:hover{border-color:rgba(255,61,146,.45); transform:translateY(-3px)}
+figure.cut .shot{
+  display:block; width:100%; border:0; padding:0;
+  background:#f6eff5; cursor:zoom-in; font:inherit; color:inherit;
+}
+figure.cut img{display:block; width:100%; height:auto}
+figure.cut figcaption{padding:.7rem .85rem .85rem; border-top:1px solid var(--line)}
+figure.cut .k{
+  display:block; font-size:.58rem; font-weight:800; letter-spacing:.18em;
+  color:var(--pink); margin-bottom:.2rem;
+}
+figure.cut b{display:block; font-size:.85rem; font-weight:700}
+figure.cut figcaption span:last-child{font-size:.72rem; color:var(--ink-soft); line-height:1.6}
 </style>
 </head>
 <body>
@@ -172,15 +196,6 @@
     <h2>3D / THA4 用の固定カット</h2>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:clamp(1.2rem,4vw,2.4rem)">
       <div>
-        <h3 style="margin-bottom:.8rem">必須カット</h3>
-        <ul class="bullets">
-          <li>正面 / 45度 / 真横 / 背面</li>
-          <li>顔アップ</li>
-          <li>水着のみ 前後</li>
-          <li>T シャツあり 前後</li>
-        </ul>
-      </div>
-      <div>
         <h3 style="margin-bottom:.8rem">ニュートラルポーズ</h3>
         <ul class="bullets">
           <li>頭ボリボリなし</li>
@@ -190,6 +205,78 @@
           <li>インナーカラーとメッシュの位置を固定</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>必須カット</h2>
+    <p class="muted" style="margin-bottom:1.6rem">
+      3D / THA4 に渡す全身の固定カットです。クリックで拡大できます。
+    </p>
+    <div class="cuts">
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/front.webp"
+                data-cap="Alibiちゃん 固定カット — 正面"
+                data-alt="Alibiちゃんの正面の全身固定カット。">
+          <img src="assets/alibi/tha4/front-thumb.webp" width="420" height="560" loading="lazy"
+               alt="正面の固定カット">
+        </button>
+        <figcaption><span class="k">FRONT</span><b>正面</b><span>ニュートラルポーズの基準カット</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/angle45.webp"
+                data-cap="Alibiちゃん 固定カット — 45度"
+                data-alt="Alibiちゃんの45度の全身固定カット。">
+          <img src="assets/alibi/tha4/angle45-thumb.webp" width="420" height="560" loading="lazy"
+               alt="45度の固定カット">
+        </button>
+        <figcaption><span class="k">3/4</span><b>45度</b><span>立ち絵まわりの基準</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/side.webp"
+                data-cap="Alibiちゃん 固定カット — 真横"
+                data-alt="Alibiちゃんの真横の全身固定カット。">
+          <img src="assets/alibi/tha4/side-thumb.webp" width="420" height="560" loading="lazy"
+               alt="真横の固定カット">
+        </button>
+        <figcaption><span class="k">SIDE</span><b>真横</b><span>姿勢と髪のシルエット確認用</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/back.webp"
+                data-cap="Alibiちゃん 固定カット — 背面"
+                data-alt="Alibiちゃんの背面の全身固定カット。">
+          <img src="assets/alibi/tha4/back-thumb.webp" width="420" height="560" loading="lazy"
+               alt="背面の固定カット">
+        </button>
+        <figcaption><span class="k">BACK</span><b>背面</b><span>T シャツのバックと髪の後ろ</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/face.webp"
+                data-cap="Alibiちゃん 固定カット — 顔アップ"
+                data-alt="Alibiちゃんの顔アップの全身固定カット。">
+          <img src="assets/alibi/tha4/face-thumb.webp" width="420" height="560" loading="lazy"
+               alt="顔アップの固定カット">
+        </button>
+        <figcaption><span class="k">FACE</span><b>顔アップ</b><span>ジト目・猫口・インナーカラーの位置</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/swimwear-fb.webp"
+                data-cap="Alibiちゃん 固定カット — 水着のみ 前後"
+                data-alt="Alibiちゃんの水着のみ 前後の全身固定カット。">
+          <img src="assets/alibi/tha4/swimwear-fb-thumb.webp" width="420" height="560" loading="lazy"
+               alt="水着のみ 前後の固定カット">
+        </button>
+        <figcaption><span class="k">SWIM</span><b>水着のみ 前後</b><span>水着単体のシルエット</span></figcaption>
+      </figure>
+      <figure class="cut">
+        <button class="shot" data-full="assets/alibi/tha4/shirt-fb.webp"
+                data-cap="Alibiちゃん 固定カット — T シャツあり 前後"
+                data-alt="AlibiちゃんのT シャツあり 前後の全身固定カット。">
+          <img src="assets/alibi/tha4/shirt-fb-thumb.webp" width="420" height="560" loading="lazy"
+               alt="T シャツあり 前後の固定カット">
+        </button>
+        <figcaption><span class="k">SHIRT</span><b>T シャツあり 前後</b><span>常用服の状態</span></figcaption>
+      </figure>
     </div>
   </section>
 

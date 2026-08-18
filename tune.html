@@ -202,7 +202,7 @@ kbd{
   let data = saved ? JSON.parse(saved) : fresh;
   if (saved) note('前回の編集内容を復元しました');
 
-  let recs = Diorama.build(root, data);
+  let recs = Diorama.build(root, data, 'all');   // show sleep + awake props together
   let motion = Diorama.animate(root, recs, data, { frozen: true });
   let sel = null;
 

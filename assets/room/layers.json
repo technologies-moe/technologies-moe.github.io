@@ -1,5 +1,5 @@
 {
-  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth.",
+  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth. `when` limits a layer to one room state: 'sleep' is 02:00-08:00 JST, 'awake' is the rest of the day; ?sleep=1 / ?sleep=0 forces either for testing.",
   "perspective": 2000,
   "amp": {
     "x": 58,
@@ -55,15 +55,21 @@
       "file": "07-desk.webp",
       "par": 0.7,
       "sx": 0.55,
-      "sy": 0.55,
+      "sy": 0.6494,
       "tx": -24.7,
-      "ty": -0.4,
+      "ty": 4.57,
       "pin": {
         "x": 13,
         "y": 38,
         "label": "WHAT WE WRITE",
         "goto": "#about",
         "aria": "技術の話へ"
+      },
+      "shade": {
+        "x": 37.1,
+        "y": 87.0,
+        "w": 4.5,
+        "h": 1.6
       }
     },
     {
@@ -74,6 +80,22 @@
       "sy": 0.92,
       "tx": 5,
       "ty": 35
+    },
+    {
+      "id": "sleep-board",
+      "file": "11-sleep-board.webp",
+      "when": "sleep",
+      "par": 0.95,
+      "sx": 0.17,
+      "sy": 0.1955,
+      "tx": 4.0,
+      "ty": 31.0,
+      "shade": {
+        "x": 53.5,
+        "y": 89.6,
+        "w": 15,
+        "h": 3
+      }
     },
     {
       "id": "character",
@@ -107,7 +129,8 @@
         "hold": 95,
         "tail": 45,
         "doubleChance": 0.28
-      }
+      },
+      "when": "awake"
     },
     {
       "id": "books",

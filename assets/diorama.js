@@ -14,12 +14,33 @@ window.Diorama = (function () {
   const Z_SPREAD = 400;
   const zOf = (par) => Math.round((par - 1) * Z_SPREAD);
 
-  function build(root, data) {
+  /* JST is fixed at UTC+9 all year, so the hour can be read straight off the
+     UTC clock — no timezone database, and it stays correct wherever the
+     visitor actually is. */
+  function jstHour(now) {
+    return ((now || new Date()).getUTCHours() + 9) % 24;
+  }
+
+  /* The room has two states. Between 02:00 and 08:00 JST Alibi is asleep, so
+     the chair carries the SLEEP MODE board instead of her. `?sleep=1` / `?sleep=0`
+     forces either state for testing. */
+  function mode(search) {
+    const q = new URLSearchParams(search != null ? search : location.search).get('sleep');
+    if (q === '1' || q === 'on'  || q === 'true')  return 'sleep';
+    if (q === '0' || q === 'off' || q === 'false') return 'awake';
+    const h = jstHour();
+    return (h >= 2 && h < 8) ? 'sleep' : 'awake';
+  }
+
+  function build(root, data, state) {
     const camera = root.querySelector('.camera');
     camera.textContent = '';
     const made = [];
+    const now = state || mode();
 
-    data.layers.forEach((L, i) => {
+    // a layer with `when` only exists in that state; everything else is always on.
+    // the tuner passes 'all' so both states can be placed whatever the clock says.
+    data.layers.filter(L => !L.when || now === 'all' || L.when === now).forEach((L, i) => {
       const el = document.createElement('div');
       el.className = 'layer';
       el.dataset.id = L.id;
@@ -241,5 +262,5 @@ window.Diorama = (function () {
     return { count: () => n, total: imgs.length };
   }
 
-  return { build, animate, apply, place, whenLoaded, zOf, Z_SPREAD };
+  return { build, animate, apply, place, whenLoaded, zOf, Z_SPREAD, mode, jstHour };
 })();
