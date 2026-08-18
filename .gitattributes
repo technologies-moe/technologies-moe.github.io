@@ -1,0 +1,7 @@
+# 原本（マスター）だけを LFS へ。
+# GitHub Pages は LFS のファイルをポインタのまま返すので、
+# サイトが参照する .webp / .jpg / .png は絶対にここへ足さないこと。
+assets/alibi/src/**        filter=lfs diff=lfs merge=lfs -text
+assets/alibi/secret/src/** filter=lfs diff=lfs merge=lfs -text
+assets/banner/src/**       filter=lfs diff=lfs merge=lfs -text
+assets/room/src/**         filter=lfs diff=lfs merge=lfs -text

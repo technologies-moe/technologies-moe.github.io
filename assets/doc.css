@@ -1,0 +1,290 @@
+/* ============================================================
+   doc.css — shared shell for the flat sub-pages
+   (alibi*.html, secret.html). index.html keeps its own diorama CSS.
+   Light by default; <body class="dark"> flips the palette for the
+   hidden page without duplicating the layout rules.
+   ============================================================ */
+
+:root{
+  --ink:#33263c;
+  --ink-soft:#6d5d78;
+  --paper:#faf5fb;
+  --panel:#fff;
+  --panel-soft:rgba(120,90,140,.05);
+  --pink:#ff3d92;
+  --lav:#b8a2d8;
+  --mint:#4fc9bd;
+  --line:rgba(120,90,140,.18);
+  --shadow:0 18px 50px -20px rgba(80,40,100,.35);
+  --glow-a:rgba(255,61,146,.10);
+  --glow-b:rgba(184,162,216,.16);
+}
+body.dark{
+  --ink:#f2eaf6;
+  --ink-soft:#b6a5c4;
+  --paper:#150e1c;
+  --panel:rgba(255,255,255,.04);
+  --panel-soft:rgba(255,255,255,.03);
+  --line:rgba(255,255,255,.12);
+  --shadow:0 18px 50px -22px rgba(0,0,0,.8);
+  --glow-a:rgba(255,61,146,.16);
+  --glow-b:rgba(123,44,191,.22);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+  color:var(--ink);
+  line-height:1.85;
+  min-height:100svh;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(120% 80% at 15% -10%, var(--glow-a), transparent 60%),
+    radial-gradient(100% 70% at 92% 108%, var(--glow-b), transparent 60%),
+    var(--paper);
+  background-attachment:fixed;
+}
+
+/* ---------------- shell ---------------- */
+.wrap{
+  max-width:920px;
+  margin:0 auto;
+  padding:clamp(1.6rem,5vh,3rem) clamp(1.1rem,5vw,2rem) 5rem;
+}
+.wrap.wide{max-width:1140px}
+
+.back{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.82rem; font-weight:700; letter-spacing:.05em;
+  color:var(--ink-soft); text-decoration:none;
+  transition:color .2s, gap .2s;
+}
+.back:hover{color:var(--pink); gap:.75rem}
+
+/* ---------------- page head ---------------- */
+.phead{margin:clamp(1.8rem,5vh,3rem) 0 clamp(1.6rem,4vh,2.4rem)}
+.eyebrow{
+  display:block;
+  font-size:.66rem; font-weight:800; letter-spacing:.28em;
+  color:var(--lav);
+  margin-bottom:.7rem;
+}
+h1{
+  font-size:clamp(1.9rem,5.5vw,3.1rem);
+  font-weight:800; letter-spacing:-.03em; line-height:1.16;
+}
+h1 .dot{color:var(--pink)}
+.lead{
+  font-size:1.02rem; font-weight:500;
+  max-width:52ch; margin-top:1rem;
+}
+.sub{color:var(--ink-soft); max-width:56ch; margin-top:.6rem; font-size:.92rem}
+
+.stamp{
+  display:inline-block;
+  font-size:.66rem; font-weight:800; letter-spacing:.26em;
+  color:var(--pink);
+  border:1.5px solid currentColor;
+  border-radius:999px;
+  padding:.28rem .9rem;
+  margin-bottom:1.1rem;
+  transform:rotate(-2deg);
+}
+
+/* ---------------- section ---------------- */
+.sect{margin-top:clamp(2.6rem,7vh,4.2rem)}
+h2{
+  font-size:1.14rem; font-weight:800; letter-spacing:-.01em;
+  margin-bottom:1.3rem;
+  display:flex; align-items:center; gap:.7rem;
+}
+h2::before{
+  content:""; width:7px; height:7px; border-radius:2px;
+  background:var(--pink); transform:rotate(45deg); flex:none;
+}
+h3{font-size:.98rem; font-weight:700}
+p + p{margin-top:.9rem}
+.muted{color:var(--ink-soft)}
+.rule{
+  height:1px; margin:clamp(2.4rem,6vh,3.4rem) 0;
+  background:linear-gradient(90deg, rgba(255,61,146,.5), transparent);
+}
+
+/* ---------------- sheet (image) cards ---------------- */
+.sheets{display:grid; gap:clamp(1rem,3vw,1.6rem)}
+.sheets.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+figure.sheet{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .3s, border-color .3s;
+}
+figure.sheet:hover{transform:translateY(-3px); border-color:rgba(255,61,146,.4)}
+figure.sheet .shot{
+  display:block; position:relative;
+  border:0; padding:0; width:100%;
+  background:var(--panel-soft);
+  cursor:zoom-in;
+  font:inherit; color:inherit;
+}
+figure.sheet img{display:block; width:100%; height:auto}
+figure.sheet .shot::after{
+  content:"クリックで拡大";
+  position:absolute; right:.7rem; bottom:.7rem;
+  font-size:.64rem; font-weight:800; letter-spacing:.14em;
+  padding:.3rem .7rem; border-radius:999px;
+  background:rgba(30,15,40,.72); color:#fff;
+  opacity:0; transition:opacity .25s;
+}
+figure.sheet .shot:hover::after,
+figure.sheet .shot:focus-visible::after{opacity:1}
+figcaption{
+  padding:1rem 1.2rem 1.2rem;
+  border-top:1px solid var(--line);
+}
+figcaption b{display:block; font-size:.95rem; font-weight:700; margin-bottom:.2rem}
+figcaption span{font-size:.83rem; color:var(--ink-soft)}
+
+/* ---------------- cards / specs ---------------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:1.25rem 1.35rem;
+  transition:border-color .3s, transform .3s;
+}
+.card:hover{border-color:rgba(255,61,146,.4); transform:translateY(-3px)}
+.card .n{
+  font-size:.64rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink); display:block; margin-bottom:.5rem;
+}
+.card h3{margin-bottom:.3rem}
+.card p{font-size:.84rem; color:var(--ink-soft)}
+
+.spec{
+  list-style:none; display:grid; gap:.55rem;
+  border-top:1px dashed var(--line);
+  padding-top:1.2rem;
+}
+.spec li{
+  display:grid; grid-template-columns:6.5rem 1fr; gap:.8rem;
+  font-size:.9rem; color:var(--ink-soft);
+  align-items:start;
+}
+.spec b{
+  font-size:.68rem; font-weight:800; letter-spacing:.13em;
+  color:var(--lav); padding-top:.34rem;
+}
+
+.bullets{list-style:none; display:grid; gap:.45rem}
+.bullets li{
+  font-size:.9rem; color:var(--ink-soft);
+  padding-left:1.15rem; position:relative;
+}
+.bullets li::before{
+  content:""; position:absolute; left:0; top:.72em;
+  width:5px; height:5px; border-radius:1px;
+  background:var(--lav); transform:rotate(45deg);
+}
+
+/* colour chips lifted off the reference sheet */
+.swatches{display:flex; flex-wrap:wrap; gap:1rem}
+.sw{text-align:center; width:5.2rem}
+.sw i{
+  display:block; height:3.1rem; border-radius:12px;
+  border:1px solid var(--line);
+  margin-bottom:.45rem;
+}
+.sw b{display:block; font-size:.76rem; font-weight:700}
+.sw code{
+  font-size:.66rem; color:var(--ink-soft);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+.note{
+  margin-top:2.4rem;
+  padding:1.1rem 1.3rem;
+  border-left:3px solid var(--pink);
+  background:linear-gradient(90deg, var(--glow-a), transparent);
+  border-radius:0 12px 12px 0;
+  font-size:.85rem; color:var(--ink-soft);
+}
+.note code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.9em; color:var(--ink);
+}
+
+/* ---------------- next/prev page rail ---------------- */
+.rail{
+  display:grid; gap:.8rem;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  margin-top:clamp(2.6rem,7vh,4rem);
+}
+.rail a{
+  display:block; text-decoration:none; color:inherit;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1rem 1.15rem;
+  transition:border-color .3s, transform .3s;
+}
+.rail a:hover{border-color:rgba(255,61,146,.45); transform:translateY(-3px)}
+.rail a[aria-current="page"]{
+  border-color:rgba(255,61,146,.5);
+  background:linear-gradient(120deg, var(--glow-a), transparent);
+}
+.rail .k{
+  font-size:.62rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink); display:block; margin-bottom:.35rem;
+}
+.rail b{display:block; font-size:.94rem; font-weight:700}
+.rail span{font-size:.79rem; color:var(--ink-soft)}
+
+footer{
+  margin-top:4rem; padding-top:1.8rem;
+  border-top:1px solid var(--line);
+  font-size:.78rem; color:var(--ink-soft);
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+footer a{color:var(--pink); text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ---------------- lightbox ---------------- */
+#lightbox{
+  position:fixed; inset:0; z-index:90;
+  display:none; place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(18,10,26,.92);
+  backdrop-filter:blur(6px);
+}
+#lightbox.on{display:grid}
+#lightbox img{
+  max-width:100%; max-height:88svh;
+  width:auto; height:auto;
+  border-radius:10px;
+  box-shadow:0 30px 90px -30px #000;
+}
+#lightbox .close{
+  position:absolute; top:1rem; right:1rem;
+  width:2.6rem; height:2.6rem; border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08); color:#fff;
+  font-size:1.1rem; cursor:pointer; line-height:1;
+}
+#lightbox .close:hover{background:var(--pink); border-color:var(--pink)}
+#lightbox .cap{
+  position:absolute; left:0; right:0; bottom:1.1rem;
+  text-align:center; color:#e8dcf0;
+  font-size:.8rem; letter-spacing:.04em;
+}

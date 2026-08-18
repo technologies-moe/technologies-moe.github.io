@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小ネタ漫画案 &amp; イラスト — Alibi 設定資料</title>
+<meta name="description" content="Alibiちゃんの小ネタ漫画ページ案（1ページ完結ギャグ10本）と、モノクロイラスト。">
+<meta name="theme-color" content="#faf5fb">
+<link rel="canonical" href="https://www.technologies.moe/alibi-comic.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.technologies.moe/alibi-comic.html">
+<meta property="og:title" content="小ネタ漫画案 &amp; イラスト — Alibi 設定資料">
+<meta property="og:description" content="1ページ完結ギャグ10本のネタ出しと、モノクロイラスト。">
+<meta property="og:image" content="https://www.technologies.moe/assets/alibi/comic-plan.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/doc.css">
+<style>
+.hero-sheet{max-width:720px; margin-inline:auto}
+/* the gag list is dense and numbered, so it reads better as a table-ish grid
+   than as another round of cards */
+.gags{list-style:none; display:grid; gap:.55rem; counter-reset:g}
+.gags li{
+  display:grid; grid-template-columns:2.2rem 1fr; gap:.9rem;
+  align-items:start;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:.9rem 1.1rem;
+  transition:border-color .3s;
+}
+.gags li:hover{border-color:rgba(255,61,146,.4)}
+.gags li::before{
+  counter-increment:g; content:counter(g,decimal-leading-zero);
+  font-size:.72rem; font-weight:800; letter-spacing:.05em;
+  color:var(--pink); padding-top:.42rem;
+}
+.gags b{display:block; font-size:.94rem; font-weight:700}
+.gags span{font-size:.84rem; color:var(--ink-soft)}
+.props{display:flex; flex-wrap:wrap; gap:.55rem}
+.props span{
+  font-size:.8rem; font-weight:600;
+  border:1px solid var(--line); border-radius:999px;
+  padding:.32rem .9rem; color:var(--ink-soft);
+}
+</style>
+</head>
+<body>
+<div class="wrap wide">
+
+  <a href="alibi.html" class="back">← 設定資料トップ</a>
+
+  <div class="phead">
+    <span class="eyebrow">04 / COMIC</span>
+    <h1>小ネタ漫画案 &amp; イラスト</h1>
+    <p class="lead">テンポよくサクッと読める1ページ完結ギャグのネタ出しと、雰囲気確認用のモノクロイラストです。</p>
+    <p class="sub">日常の「あるある」や、ちょっと変わった価値観をゆるく楽しむ構成。各案は1ページ完結のシチュエーションになっています。</p>
+  </div>
+
+  <div class="sheets hero-sheet">
+    <figure class="sheet">
+      <button class="shot" data-full="assets/alibi/comic-plan.webp"
+              data-cap="Alibiちゃん 小ネタ漫画ページ案（10本）"
+              data-alt="Alibiちゃんの小ネタ漫画ページ案。メインキャラ設定、表情・角度参考、記号メモ、10本のギャグコマ、使える小物とアイコン、作画メモをまとめたモノクロのネーム資料。">
+        <img src="assets/alibi/comic-plan-thumb.webp" width="538" height="760" loading="lazy"
+             alt="小ネタ漫画ページ案のサムネイル">
+      </button>
+      <figcaption>
+        <b>小ネタ漫画ページ案</b>
+        <span>キャラ設定・表情参考・記号メモ・ギャグ10本・小物リスト・作画メモ</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="rule"></div>
+
+  <section class="sect" style="margin-top:0">
+    <h2>ギャグ10本</h2>
+    <ul class="gags">
+      <li><div><b>水着の裾パチン</b><span>水着の裾をパチンと直すだけ。気分もリセット。</span></div></li>
+      <li><div><b>お風呂上がり直ドライヤー</b><span>タオルは最小限、すぐドライヤー。乾かすより先に満足する。</span></div></li>
+      <li><div><b>水着4着ローテ管理</b><span>SW-01 から SW-04 まで。4着をローテで運用、管理だけはきっちり。</span></div></li>
+      <li><div><b>新PCを眺めるだけ</b><span>新しい PC を買ったのに、ほぼ起動してない。</span></div></li>
+      <li><div><b>服どうする？ → そのまま外出</b><span>結論：いつもの T シャツで OK。そのまま出かける。</span></div></li>
+      <li><div><b>PCにやたら丁寧</b><span>「よろしくお願いします」とペコリ。大事な相棒だから。</span></div></li>
+      <li><div><b>エラーで元気になる</b><span>ERROR 500 を見るとテンション爆上がり。「キターッ」</span></div></li>
+      <li><div><b>PoC 作って即ポイ</b><span>とりあえず作って、満足したらすぐ捨てる。</span></div></li>
+      <li><div><b>評価は使えそうな時だけ気になる</b><span>褒められても、使えそうな評価じゃないと響かない。</span></div></li>
+      <li><div><b>技術に後戻り（リバース）がない</b><span>進むのみ。技術も自分も後戻りしない。学んだら、また直すだけ。</span></div></li>
+    </ul>
+    <p class="muted" style="font-size:.85rem; margin-top:1.2rem">
+      作画メモ：コマは2〜3コマ中心でテンポ重視。表情は半目ベースで変化は小さめ。猫・ハート・歯車・エラー画面などを効果的に使って世界観を統一。
+    </p>
+  </section>
+
+  <section class="sect">
+    <h2>ネタ元になる生活習慣</h2>
+    <p class="muted" style="margin-bottom:1.4rem">
+      コマにしやすい、Alibiちゃんの定番動作です。
+    </p>
+    <div class="grid">
+      <div class="card">
+        <span class="n">HABIT</span>
+        <h3>頭ボリボリ</h3>
+        <p>PC に向かいながら無意識に頭を掻く。思考中・エラー確認中・だるい時の定番動作。立ち絵ではボリボリなしのニュートラルも用意。</p>
+      </div>
+      <div class="card">
+        <span class="n">BATH</span>
+        <h3>風呂はシャワー派</h3>
+        <p>タオルの洗濯が面倒なので、脱衣所に移動してからドライヤーで直接身体を乾かそうとする。中間工程を嫌う。</p>
+      </div>
+      <div class="card">
+        <span class="n">OUT</span>
+        <h3>外出</h3>
+        <p>ミニスカかワンピースか悩むが、結局着替えが面倒で普段着のまま出ていく。コミケにもだいたいその延長線上の格好で行く。</p>
+      </div>
+      <div class="card">
+        <span class="n">SWIM</span>
+        <h3>水着を直す仕草</h3>
+        <p>ずれた時に周囲を確認してから小さく「パチン」と直す。本人に性的意図はなく完全に生活動作。見られていたら「……何？」というジト目。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>使える小物・アイコン</h2>
+    <div class="props">
+      <span>黒猫ぬいぐるみ（相棒）</span>
+      <span>マグカップ（黒ネコ柄）</span>
+      <span>サイバー PC（猫ステッカー）</span>
+      <span>シャワー（水滴描写）</span>
+      <span>バスタオル（ねこ柄）</span>
+      <span>ドライヤー</span>
+      <span>アイコンセット（♡ ☆ ♪ ⚙ など）</span>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>イラスト</h2>
+    <div class="sheets two">
+      <figure class="sheet">
+        <button class="shot" data-full="assets/alibi/poc-rush.webp"
+                data-cap="PoC RUSH — 深夜作業の Alibiちゃん"
+                data-alt="モノクロイラスト。複数のモニタとホワイトボードに囲まれ、ステッカーだらけのノートPCに向かう深夜作業中のAlibiちゃん。TODOとBUG LISTのノート、エナジードリンク、CAFFEINE OR DIE のマグカップ。">
+          <img src="assets/alibi/poc-rush-thumb.webp" width="538" height="760" loading="lazy"
+               alt="深夜作業中のAlibiちゃんのモノクロイラスト">
+        </button>
+        <figcaption>
+          <b>PoC RUSH</b>
+          <span>締切前、03:17。作りかけの PoC とバグリストに囲まれた深夜作業カット。</span>
+        </figcaption>
+      </figure>
+
+      <figure class="sheet">
+        <button class="shot" data-full="assets/alibi/ink-swing.webp"
+                data-cap="墨ハネのモノクロイラスト"
+                data-alt="墨のような黒い円弧と飛沫を背景に、髪をなびかせて振り向くAlibiちゃんのハイコントラストなモノクロイラスト。">
+          <img src="assets/alibi/ink-swing-thumb.webp" width="760" height="538" loading="lazy"
+               alt="墨ハネを背景にしたAlibiちゃんのモノクロイラスト">
+        </button>
+        <figcaption>
+          <b>INK SWING</b>
+          <span>ハイコントラストのモノクロ。扉絵や章扉に使える引きのカット。</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="note">
+    このページはネタ出し用の参考資料です。実際の掲載時は自由に改変・追加してください。
+  </div>
+
+  <nav class="rail" aria-label="設定資料ページ">
+    <a href="alibi.html"><span class="k">01 / PROFILE</span><b>プロフィール</b><span>基本設定・性格・カラー</span></a>
+    <a href="alibi-design.html"><span class="k">02 / DESIGN</span><b>キャラクターデザイン</b><span>外見・常用服・同一性保持</span></a>
+    <a href="alibi-mind.html"><span class="k">03 / MIND</span><b>思考回路</b><span>価値観・技術者としての性質</span></a>
+    <a href="alibi-comic.html" aria-current="page"><span class="k">04 / COMIC</span><b>小ネタ漫画案</b><span>生活習慣・ギャグ・イラスト</span></a>
+    <a href="alibi-voice.html"><span class="k">05 / VOICE</span><b>口調と声</b><span>セリフ・話速・声の方向性</span></a>
+  </nav>
+
+  <footer>
+    <span>&copy; technologies.moe</span>
+    <a href="index.html">← 部屋に戻る</a>
+  </footer>
+
+</div>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="拡大表示">
+  <button class="close" aria-label="閉じる">✕</button>
+  <img alt="">
+  <p class="cap"></p>
+</div>
+<script src="assets/lightbox.js"></script>
+</body>
+</html>

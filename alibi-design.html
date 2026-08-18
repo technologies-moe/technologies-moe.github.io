@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>キャラクターデザイン — Alibi 設定資料</title>
+<meta name="description" content="Alibiちゃんのキャラクターデザイン資料。三面図・表情バリエーション・髪型・衣装の仕様まとめ。">
+<meta name="theme-color" content="#faf5fb">
+<link rel="canonical" href="https://www.technologies.moe/alibi-design.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.technologies.moe/alibi-design.html">
+<meta property="og:title" content="キャラクターデザイン — Alibi 設定資料">
+<meta property="og:description" content="三面図・表情バリエーション・衣装仕様。">
+<meta property="og:image" content="https://www.technologies.moe/assets/alibi/sheet.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/doc.css">
+<style>
+.quote-sm{
+  font-size:1.02rem; font-weight:700; line-height:1.6;
+  padding-left:1rem; border-left:3px solid var(--pink);
+}
+/* the nine identity anchors are a checklist, so they get numbered chips */
+.keys{
+  list-style:none; counter-reset:k;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.6rem;
+}
+.keys li{
+  counter-increment:k;
+  display:grid; grid-template-columns:1.6rem 1fr; gap:.7rem; align-items:center;
+  border:1px solid var(--line); border-radius:12px;
+  padding:.7rem .95rem; background:var(--panel);
+  font-size:.9rem; font-weight:600;
+}
+.keys li::before{
+  content:counter(k);
+  display:grid; place-items:center;
+  width:1.6rem; height:1.6rem; border-radius:50%;
+  background:var(--pink); color:#fff;
+  font-size:.68rem; font-weight:800;
+}
+</style>
+</head>
+<body>
+<div class="wrap wide">
+
+  <a href="alibi.html" class="back">← 設定資料トップ</a>
+
+  <div class="phead">
+    <span class="eyebrow">02 / DESIGN</span>
+    <h1>キャラクターデザイン</h1>
+    <p class="lead">三面図、表情バリエーション、髪・アクセ・衣装のディテールをまとめた基本シートです。</p>
+    <p class="sub">— 黒のワンピース型競泳水着 × ブカブカの白 T シャツ。整えすぎないことが重要 —</p>
+  </div>
+
+  <div class="sheets two">
+    <figure class="sheet">
+      <button class="shot" data-full="assets/alibi/sheet.webp"
+              data-cap="Alibiちゃん 設定資料（三面図・表情・ディテール）"
+              data-alt="Alibiちゃんの設定資料シート。正面・背面・側面の三面図、表情バリエーション、髪とアクセのディテール、カラー設定、パーソナルデータ。">
+        <img src="assets/alibi/sheet-thumb.webp" width="538" height="760" loading="lazy"
+             alt="Alibiちゃん設定資料シートのサムネイル">
+      </button>
+      <figcaption>
+        <b>設定資料シート</b>
+        <span>正面 / 背面 / 側面（3/4）・表情4種・髪とアクセのディテール・カラー設定・パーソナルデータ</span>
+      </figcaption>
+    </figure>
+
+    <figure class="sheet">
+      <button class="shot" data-full="assets/alibi/memo.webp"
+              data-cap="Alibiちゃん 設定メモ（生活シーン・ラフ）"
+              data-alt="Alibiちゃんの設定メモ。全身ラフ、頭をかく仕草、デスク前と風呂上がりの生活シーン。">
+        <img src="assets/alibi/memo-thumb.webp" width="507" height="760" loading="lazy"
+             alt="Alibiちゃん設定メモのサムネイル">
+      </button>
+      <figcaption>
+        <b>設定メモ</b>
+        <span>全身ラフ・仕草メモ・生活シーン（デスク前 / 風呂上がり）と行動原理の書き込み</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="rule"></div>
+
+  <section class="sect" style="margin-top:0">
+    <h2>見た目のポイント</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="n">HAIR</span>
+        <h3>ボサボサのセミロング</h3>
+        <p>鎖骨〜肩下あたり。かなり無造作で、寝癖や飛び毛が常にある。<b>整えすぎないことが重要。</b></p>
+      </div>
+      <div class="card">
+        <span class="n">COLOR</span>
+        <h3>青みのある黒 + 差し色2つ</h3>
+        <p>ベースは青みのある黒髪。インナーカラーはくすみピンク、メッシュはミントグリーン。</p>
+      </div>
+      <div class="card">
+        <span class="n">EYES</span>
+        <h3>半開き気味のジト目</h3>
+        <p>これがデフォルト。眠そう、だるそう、無表情寄り。</p>
+      </div>
+      <div class="card">
+        <span class="n">MOUTH</span>
+        <h3>小さめの猫口</h3>
+        <p>技術の話・エラー・PoC 成功時だけ、明確に表情が変わる。</p>
+      </div>
+      <div class="card">
+        <span class="n">BODY</span>
+        <h3>細身〜標準、胸はそこそこ大きめ</h3>
+        <p>女性らしい体型。姿勢は基本悪く、猫背・椅子にだらっと・机に寄りかかるが多い。</p>
+      </div>
+      <div class="card">
+        <span class="n">ACC</span>
+        <h3>チョーカー &amp; 耳ピアス</h3>
+        <p>黒のチョーカーに猫モチーフのチャーム。耳ピアスは複数。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>常用服</h2>
+    <p class="muted" style="margin-bottom:1.4rem">Alibiちゃんの最重要ビジュアル設定です。</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:clamp(1.2rem,4vw,2.4rem)">
+      <div>
+        <h3 style="margin-bottom:.8rem">構成</h3>
+        <ul class="bullets">
+          <li>黒のワンピース型競泳水着</li>
+          <li>その上から白〜薄灰色のブカブカ T シャツ</li>
+          <li>T シャツは大きく肩から落ちている</li>
+          <li>家では裸足</li>
+          <li>外出時も着替えが面倒で、そのまま出ることがある</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:.8rem">なぜ常時水着なのか</h3>
+        <p class="quote-sm">「お風呂で服脱ぐのめんどくさいじゃん？」</p>
+        <ul class="bullets" style="margin-top:1rem">
+          <li>入浴時に着替える工程が嫌い</li>
+          <li>水着ならそのまま風呂に入れる、という本人なりの合理化</li>
+          <li>「水着だから恥ずかしくないもん」という独自理論</li>
+          <li>下着で外に出るのはダメだが、水着は公共空間でも着るものなので問題ない、と解釈している</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted" style="font-size:.84rem; margin-top:1.4rem">
+      水着そのものの好み・型番・ローテーションは、別資料にまとめてあります。
+    </p>
+  </section>
+
+  <section class="sect">
+    <h2>同一性保持で重要な9要素</h2>
+    <p class="muted" style="margin-bottom:1.4rem">
+      3D / THA4 や別作画で描き起こす時、ここが揃っていれば Alibiちゃんに見えます。
+    </p>
+    <ol class="keys">
+      <li>ボサボサのセミロング</li>
+      <li>黒髪（青みのある）</li>
+      <li>ピンクのインナーカラー</li>
+      <li>ミントのメッシュ</li>
+      <li>半開きジト目</li>
+      <li>猫口</li>
+      <li>黒ワンピース水着</li>
+      <li>ブカブカ T シャツ</li>
+      <li>だるそうな姿勢</li>
+    </ol>
+  </section>
+
+  <section class="sect">
+    <h2>3D / THA4 用の固定カット</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:clamp(1.2rem,4vw,2.4rem)">
+      <div>
+        <h3 style="margin-bottom:.8rem">必須カット</h3>
+        <ul class="bullets">
+          <li>正面 / 45度 / 真横 / 背面</li>
+          <li>顔アップ</li>
+          <li>水着のみ 前後</li>
+          <li>T シャツあり 前後</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:.8rem">ニュートラルポーズ</h3>
+        <ul class="bullets">
+          <li>頭ボリボリなし</li>
+          <li>腕は自然に下ろす</li>
+          <li>左右対称に近い姿勢</li>
+          <li>ジト目・無表情</li>
+          <li>インナーカラーとメッシュの位置を固定</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>表情バリエーション</h2>
+    <div class="grid">
+      <div class="card"><span class="n">01</span><h3>デフォルト（ねむたげ）</h3><p>半開きの目、無表情。基本はこれ。</p></div>
+      <div class="card"><span class="n">02</span><h3>ちょっとムッ</h3><p>眉が寄る程度。変化は小さめ。</p></div>
+      <div class="card"><span class="n">03</span><h3>考え中（コーディング）</h3><p>視線を落として、指を口元に。</p></div>
+      <div class="card"><span class="n">04</span><h3>うっすらドヤ（つかれ笑い）</h3><p>目を細めた薄い笑み。動いた時だけ出る。</p></div>
+    </div>
+    <p class="muted" style="font-size:.85rem; margin-top:1.2rem">
+      作画メモ：表情は半目ベースで、変化は小さめが◎。猫・ハート・歯車・エラー画面などを効果的に使って世界観を統一。
+    </p>
+  </section>
+
+  <nav class="rail" aria-label="設定資料ページ">
+    <a href="alibi.html"><span class="k">01 / PROFILE</span><b>プロフィール</b><span>基本設定・性格・カラー</span></a>
+    <a href="alibi-design.html" aria-current="page"><span class="k">02 / DESIGN</span><b>キャラクターデザイン</b><span>外見・常用服・同一性保持</span></a>
+    <a href="alibi-mind.html"><span class="k">03 / MIND</span><b>思考回路</b><span>価値観・技術者としての性質</span></a>
+    <a href="alibi-comic.html"><span class="k">04 / COMIC</span><b>小ネタ漫画案</b><span>生活習慣・ギャグ・イラスト</span></a>
+    <a href="alibi-voice.html"><span class="k">05 / VOICE</span><b>口調と声</b><span>セリフ・話速・声の方向性</span></a>
+  </nav>
+
+  <footer>
+    <span>&copy; technologies.moe</span>
+    <a href="index.html">← 部屋に戻る</a>
+  </footer>
+
+</div>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="拡大表示">
+  <button class="close" aria-label="閉じる">✕</button>
+  <img alt="">
+  <p class="cap"></p>
+</div>
+<script src="assets/lightbox.js"></script>
+</body>
+</html>

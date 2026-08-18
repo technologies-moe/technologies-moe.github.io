@@ -707,6 +707,50 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
   .speech-body{max-width:13rem; font-size:.78rem}
 }
 
+/* ---- Alibi banner + link rail into the character sub-pages ---- */
+.char-banner{
+  position:relative;
+  border-radius:20px; overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  background:#f7eef4;
+  margin-bottom:1.6rem;
+}
+.char-banner img{display:block; width:100%; height:auto}
+.char-banner .tag{
+  position:absolute; left:clamp(.9rem,3vw,1.6rem); top:clamp(.9rem,3vw,1.4rem);
+  font-size:.6rem; font-weight:800; letter-spacing:.24em;
+  color:#7a4a63;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(122,74,99,.25);
+  border-radius:999px; padding:.28rem .85rem;
+  backdrop-filter:blur(6px);
+}
+.docs{
+  display:grid; gap:.8rem;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  margin-top:1.6rem;
+}
+.docs a{
+  display:block; text-decoration:none; color:inherit;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1rem 1.15rem;
+  transition:border-color .3s, transform .3s, box-shadow .3s;
+}
+.docs a:hover{
+  border-color:rgba(255,61,146,.45);
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
+.docs .k{
+  display:block; font-size:.6rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink); margin-bottom:.35rem;
+}
+.docs b{display:block; font-size:.93rem; font-weight:700}
+.docs span:last-child{font-size:.78rem; color:var(--ink-soft)}
+
 /* loader */
 #loader{
   position:fixed; inset:0; z-index:100;
@@ -756,6 +800,7 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
     <a href="#about">About</a>
     <a href="#works">Works</a>
     <a href="#alibi">Alibi</a>
+    <a href="alibi.html">設定資料</a>
     <a href="#members">Members</a>
     <a href="#join" class="nav-cta">Join Us</a>
   </div>
@@ -897,21 +942,54 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
         <span class="en">Character</span>
         <h2>Alibi</h2>
       </div>
+      <div class="char-banner">
+        <img src="assets/banner/alibi-pointing.webp" width="1672" height="941" loading="lazy"
+             alt="こちらを指差す Alibiちゃん">
+        <span class="tag">ALIBI</span>
+      </div>
       <div class="two-col">
         <div>
-          <p class="lead">サークルのイメージキャラクター。新刊<span class="em">「Alibi:Sleep」</span>の主人公でもあります。</p>
+          <p class="lead">サークル「技術萌」の看板キャラクター。新刊<span class="em">『AI時代、だるいけど生き残る。』</span>で読者を案内する役でもあります。</p>
           <p>部屋のどこかにいるはずなので、探してみてください。話しかけると何か言います。</p>
         </div>
         <div>
-          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.8rem">好きなもの</h3>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.8rem">性格の核</h3>
           <ul class="bullets">
-            <li>猫</li>
-            <li>コーヒー</li>
-            <li>ゲーム / 音楽</li>
-            <li>深夜作業</li>
+            <li>無気力・省エネ・面倒くさがり</li>
+            <li>他人の目より自分の合理性</li>
+            <li>技術にだけ異常な集中力</li>
+            <li>技術に対してだけ「後退のネジ」がない</li>
           </ul>
-          <p style="font-size:.82rem;margin-top:1rem">※ プロフィールは順次追記します</p>
+          <p style="font-size:.82rem;margin-top:1rem">生活は省エネ、技術には後退のネジがない女。</p>
         </div>
+      </div>
+
+      <div class="docs">
+        <a href="alibi.html">
+          <span class="k">01 / PROFILE</span>
+          <b>プロフィール</b>
+          <span>基本設定・性格・カラー</span>
+        </a>
+        <a href="alibi-design.html">
+          <span class="k">02 / DESIGN</span>
+          <b>キャラクターデザイン</b>
+          <span>外見・常用服・同一性保持</span>
+        </a>
+        <a href="alibi-mind.html">
+          <span class="k">03 / MIND</span>
+          <b>思考回路</b>
+          <span>価値観・技術者としての性質</span>
+        </a>
+        <a href="alibi-comic.html">
+          <span class="k">04 / COMIC</span>
+          <b>小ネタ漫画案</b>
+          <span>生活習慣・ギャグ・イラスト</span>
+        </a>
+        <a href="alibi-voice.html">
+          <span class="k">05 / VOICE</span>
+          <b>口調と声</b>
+          <span>セリフ・話速・声の方向性</span>
+        </a>
       </div>
     </section>
 

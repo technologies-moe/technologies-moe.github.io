@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>口調と声 — Alibi 設定資料</title>
+<meta name="description" content="Alibiちゃんの口調・代表セリフ・声の方向性。だるい平常モードと、技術の話になった瞬間の早口モード。">
+<meta name="theme-color" content="#faf5fb">
+<link rel="canonical" href="https://www.technologies.moe/alibi-voice.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.technologies.moe/alibi-voice.html">
+<meta property="og:title" content="口調と声 — Alibi 設定資料">
+<meta property="og:description" content="低め・眠い・ドライ、技術だけ早口。口調と代表セリフのまとめ。">
+<meta property="og:image" content="https://www.technologies.moe/assets/banner/alibi-pointing.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="assets/doc.css">
+<style>
+/* two speaking modes sit side by side, so the contrast is the layout */
+.modes{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem}
+.mode{
+  border:1px solid var(--line); border-radius:18px;
+  padding:1.4rem 1.5rem; background:var(--panel);
+}
+.mode.hot{border-color:rgba(255,61,146,.45); background:linear-gradient(150deg, var(--glow-a), transparent 70%)}
+.mode .k{
+  display:block; font-size:.62rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink); margin-bottom:.5rem;
+}
+.mode h3{margin-bottom:.9rem; font-size:1.05rem}
+
+/* the sample lines are the reference an author actually copies from */
+.lines{list-style:none; display:grid; gap:.6rem}
+.lines li{
+  border-left:3px solid var(--lav);
+  background:var(--panel-soft);
+  border-radius:0 12px 12px 0;
+  padding:.75rem 1.1rem;
+  font-size:1rem; font-weight:600;
+}
+.lines li em{
+  display:block; font-style:normal;
+  font-size:.79rem; font-weight:500; color:var(--ink-soft);
+  margin-top:.25rem;
+}
+.lines li.key{border-left-color:var(--pink)}
+
+.dials{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.6rem}
+.dial{border:1px solid var(--line); border-radius:13px; padding:.85rem 1rem}
+.dial b{display:block; font-size:.64rem; font-weight:800; letter-spacing:.16em; color:var(--lav); margin-bottom:.25rem}
+.dial span{font-size:.95rem; font-weight:700}
+.dial em{display:block; font-style:normal; font-size:.78rem; color:var(--ink-soft); margin-top:.15rem}
+</style>
+</head>
+<body>
+<div class="wrap wide">
+
+  <a href="alibi.html" class="back">← 設定資料トップ</a>
+
+  <div class="phead">
+    <span class="eyebrow">05 / VOICE</span>
+    <h1>口調と声</h1>
+    <p class="lead">低め・眠い・ドライ。ただし技術の話になった瞬間だけ早口になる。この落差が Alibiちゃんの喋り方の全部です。</p>
+  </div>
+
+  <section class="sect" style="margin-top:2rem">
+    <h2>2つのモード</h2>
+    <div class="modes">
+      <div class="mode">
+        <span class="k">DEFAULT</span>
+        <h3>平常モード</h3>
+        <ul class="bullets">
+          <li>だるそう、語尾が少し抜ける</li>
+          <li>「んー」「別に？」「まあ」「……で？」が多い</li>
+          <li>感情の起伏は小さい</li>
+          <li>話速は 0.9x 前後</li>
+        </ul>
+      </div>
+      <div class="mode hot">
+        <span class="k">TECH MODE</span>
+        <h3>技術モード</h3>
+        <ul class="bullets">
+          <li>語速が上がる、目が開く</li>
+          <li>説明が急に細かくなる</li>
+          <li>マシンガントーク気味</li>
+          <li>話速は 1.15〜1.25x</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>代表セリフ</h2>
+    <ul class="lines">
+      <li class="key">「うちは後退のネジ外してるからよー」<em>キャラクターの芯。技術に対してだけブレーキがない。</em></li>
+      <li>「ここポイントー」<em>解説パートの合いの手。だるい調子のまま要点を刺す。</em></li>
+      <li class="key">「全部追うの、無理だよ？」<em>本のテーマそのもの。読者への最初の一言。</em></li>
+      <li class="key">「必要になったら、そこまで潜ればいい。」<em>案内役としての結論。</em></li>
+      <li>「別に？」<em>興味のない話題への標準応答。</em></li>
+      <li class="key">「無駄こそ至福。」<em>新品 PC のタスクマネージャーを眺めながら。</em></li>
+      <li>「まあ明日には100%だけど。」<em>上のセリフの直後にかならず付く。</em></li>
+      <li>「水着だから恥ずかしくないもん。」<em>常用服の独自理論。</em></li>
+      <li>「……お、喧嘩売ってる？」<em>赤ログを見た時。ここで目が開く。</em></li>
+      <li>「ごめん、負荷かけすぎたね……」<em>人には雑なのに、PC にだけ妙に丁寧。</em></li>
+      <li>「失敗した PoC？ 答えが一個減ったじゃん。」<em>PoC を捨てる時の言い分。</em></li>
+      <li>「同じじゃない。別個体。」<em>同型の水着4着について。</em></li>
+      <li>「……続きは、起きてから。」<em>裏表紙。論文と一緒に寝落ちしながら。</em></li>
+    </ul>
+  </section>
+
+  <section class="sect">
+    <h2>声の方向性</h2>
+    <p class="muted" style="margin-bottom:1.4rem">低め・眠い・ドライ・技術だけ早口。</p>
+    <div class="dials">
+      <div class="dial"><b>PITCH</b><span>やや低め</span><em>女性声としては低い側</em></div>
+      <div class="dial"><b>BREATH</b><span>やや多め</span><em>息成分を残す</em></div>
+      <div class="dial"><b>SPEED</b><span>0.9x</span><em>技術モードは 1.15〜1.25x</em></div>
+      <div class="dial"><b>感情振幅</b><span>小さい</span><em>技術・PoC・ハードウェア時のみ大</em></div>
+      <div class="dial"><b>笑い声</b><span>「ふっ」「へへ」</span><em>声を張らない</em></div>
+      <div class="dial"><b>怒り</b><span>語速が上がる</span><em>声量は上げない</em></div>
+    </div>
+  </section>
+
+  <div class="note">
+    書く時のコツ：平常モードは<b>短く切る</b>、技術モードは<b>切らずに繋げる</b>。文の長さだけで2つのモードは書き分けられます。
+  </div>
+
+  <nav class="rail" aria-label="設定資料ページ">
+    <a href="alibi.html"><span class="k">01 / PROFILE</span><b>プロフィール</b><span>基本設定・性格・カラー</span></a>
+    <a href="alibi-design.html"><span class="k">02 / DESIGN</span><b>キャラクターデザイン</b><span>外見・常用服・同一性保持</span></a>
+    <a href="alibi-mind.html"><span class="k">03 / MIND</span><b>思考回路</b><span>価値観・技術者としての性質</span></a>
+    <a href="alibi-comic.html"><span class="k">04 / COMIC</span><b>小ネタ漫画案</b><span>生活習慣・ギャグ・イラスト</span></a>
+    <a href="alibi-voice.html" aria-current="page"><span class="k">05 / VOICE</span><b>口調と声</b><span>セリフ・話速・声の方向性</span></a>
+  </nav>
+
+  <footer>
+    <span>&copy; technologies.moe</span>
+    <a href="index.html">← 部屋に戻る</a>
+  </footer>
+
+</div>
+</body>
+</html>

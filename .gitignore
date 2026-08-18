@@ -1,1 +1,4 @@
 .DS_Store
+
+# 設定資料の原稿。assets/ に置くと GitHub Pages がそのまま配信してしまうため追跡しない
+assets/Alibi_character_settings.md
