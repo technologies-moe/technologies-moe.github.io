@@ -78,6 +78,7 @@ body{
 .layer.dim{opacity:.18}
 .layer.hide{display:none}
 .layer.solo-off{display:none}
+.layer.state-off{display:none}
 
 /* ---- floor guides ---- */
 #guides{position:absolute;inset:0;pointer-events:none;z-index:70}
@@ -90,6 +91,8 @@ body{
   font-size:10px;font-weight:800;color:#ff8ec0;
   background:rgba(20,12,26,.7);padding:1px 5px;border-radius:4px;
 }
+#guides .gl.seat{border-top-style:solid;border-top-color:rgba(79,201,189,.9)}
+#guides .gl.seat b{color:#8ff0e6}
 #guides.off{display:none}
 
 /* ---- panel ---- */
@@ -127,6 +130,13 @@ body{
 }
 .rhead .nm{font-weight:700;flex:1}
 .rhead .par{font-size:11px;color:#b9a6d4;font-variant-numeric:tabular-nums}
+.rhead .when{
+  font-size:9px;font-weight:800;letter-spacing:.1em;
+  padding:1px 6px;border-radius:999px;border:1px solid currentColor;
+}
+.rhead .when.sleep{color:#8ab4ff}
+.rhead .when.awake{color:#ffb45e}
+.row.hidden-state{opacity:.42}
 .eye{
   width:22px;height:22px;border-radius:5px;border:1px solid var(--line);
   background:#3a3044;color:#cfc3d8;font-size:10px;cursor:pointer;line-height:1;
@@ -174,6 +184,7 @@ kbd{
     <button class="btn on" id="freeze">静止</button>
     <button class="btn" id="guideBtn">床ガイド</button>
     <button class="btn" id="dimBtn">選択以外を薄く</button>
+    <button class="btn" id="stateBtn" title="when: sleep / awake の出しわけ">状態: 両方</button>
   </div>
 
   <div class="list" id="list"></div>
@@ -198,9 +209,25 @@ kbd{
 
   const res = await fetch('assets/room/layers.json', { cache: 'no-cache' });
   const fresh = await res.json();
+  const freshText = JSON.stringify(fresh);
+
+  /* A snapshot taken before layers.json changed on disk is worse than useless:
+     restoring it silently reverts whatever was edited in the file, and the next
+     "JSONをコピー" pastes that stale state back over it. So the snapshot records
+     the file it was branched from, and is only offered while that still matches. */
   const saved = localStorage.getItem(KEY);
-  let data = saved ? JSON.parse(saved) : fresh;
-  if (saved) note('前回の編集内容を復元しました');
+  const base  = localStorage.getItem(KEY + ':base');
+  let data = fresh;
+  let startupNote = '';
+  if (saved) {
+    if (base === freshText) {
+      data = JSON.parse(saved);
+      startupNote = '前回の編集内容を復元しました';
+    } else {
+      localStorage.removeItem(KEY); localStorage.removeItem(KEY + ':base');
+      startupNote = '⚠ layers.json が更新されていたので、保存中の編集内容は破棄しました';
+    }
+  }
 
   let recs = Diorama.build(root, data, 'all');   // show sleep + awake props together
   let motion = Diorama.animate(root, recs, data, { frozen: true });
@@ -215,6 +242,17 @@ kbd{
     g.innerHTML = '<b>' + p + '%</b>';
     guides.appendChild(g);
   });
+  /* Where the chair's seat meets its backrest. A prop standing on the seat has
+     its REARMOST foot on this line — that is what puts the sleep board on the
+     cushion instead of hovering over it. Measured off the chair sheet at its
+     placed transform; re-measure if the chair ever moves. */
+  {
+    const g = document.createElement('div');
+    g.className = 'gl seat';
+    g.style.top = (833 / 941 * 100).toFixed(2) + '%';
+    g.innerHTML = '<b>座と背の接合 — 奥側の足はここ</b>';
+    guides.appendChild(g);
+  }
   guides.classList.add('off');
 
   /* ---------- field spec per layer ---------- */
@@ -247,6 +285,7 @@ kbd{
       head.innerHTML =
         `<button class="eye" title="表示/非表示">👁</button>` +
         `<span class="nm">${L.id}</span>` +
+        (L.when ? `<span class="when ${L.when}">${L.when}</span>` : '') +
         `<span class="par">par ${(+L.par).toFixed(2)} / z ${Diorama.zOf(L.par)}</span>`;
       row.appendChild(head);
 
@@ -346,7 +385,7 @@ kbd{
       head.addEventListener('click', (e) => {
         if (e.target.closest('.eye')) return;
         sel = sel === L.id ? null : L.id;
-        buildList(); applyDim();
+        buildList(); applyDim(); applyState();
       });
       head.querySelector('.eye').addEventListener('click', () => {
         const r = recFor(L.id), p = pinFor(L.id);
@@ -387,7 +426,7 @@ kbd{
     }
     repaint(drag.L);
   });
-  const endDrag = () => { if (drag) { buildList(); applyDim(); persist(); drag = null; } };
+  const endDrag = () => { if (drag) { buildList(); applyDim(); applyState(); persist(); drag = null; } };
   root.addEventListener('pointerup', endDrag);
   root.addEventListener('pointercancel', endDrag);
 
@@ -401,7 +440,7 @@ kbd{
     else if (e.key === 'ArrowUp') L.ty = +(L.ty - d).toFixed(1);
     else if (e.key === 'ArrowDown') L.ty = +(L.ty + d).toFixed(1);
     else return;
-    e.preventDefault(); repaint(L); buildList(); applyDim(); persist();
+    e.preventDefault(); repaint(L); buildList(); applyDim(); applyState(); persist();
   });
 
   /* ---------- toolbar ---------- */
@@ -419,6 +458,32 @@ kbd{
     e.target.classList.toggle('on'); applyDim();
   });
 
+  /* The room has a sleep state and an awake state, and props tagged `when` only
+     appear in one of them. The tuner builds BOTH so either can be placed at any
+     hour, and this cycles the preview so overlapping props can be judged apart.
+     It only changes what is drawn — never the data. */
+  const STATES = ['all', 'awake', 'sleep'];
+  const STATE_LABEL = { all: '両方', awake: 'awake', sleep: 'sleep' };
+  let stateIdx = 0;
+  const stateBtn = document.getElementById('stateBtn');
+  function applyState() {
+    const st = STATES[stateIdx];
+    stateBtn.textContent = '状態: ' + STATE_LABEL[st];
+    stateBtn.classList.toggle('on', st !== 'all');
+    recs.forEach(r => {
+      const w = r.def.when;
+      r.el.classList.toggle('state-off', !!w && st !== 'all' && w !== st);
+    });
+    listEl.querySelectorAll('.row').forEach(row => {
+      const L = data.layers.find(l => l.id === row.dataset.id);
+      row.classList.toggle('hidden-state', !!(L && L.when && st !== 'all' && L.when !== st));
+    });
+  }
+  stateBtn.addEventListener('click', () => {
+    stateIdx = (stateIdx + 1) % STATES.length;
+    applyState();
+  });
+
   const ta = document.getElementById('json');
   const serialise = () => JSON.stringify(data, null, 2);
   document.getElementById('copy').addEventListener('click', async () => {
@@ -431,14 +496,20 @@ kbd{
   });
   document.getElementById('reset').addEventListener('click', () => {
     localStorage.removeItem(KEY);
+    localStorage.removeItem(KEY + ':base');
     location.reload();
   });
 
-  function persist() { localStorage.setItem(KEY, serialise()); }
+  function persist() {
+    localStorage.setItem(KEY, serialise());
+    localStorage.setItem(KEY + ':base', freshText);
+  }
   function note(t) { msg.textContent = t; clearTimeout(note.t); note.t = setTimeout(() => msg.textContent = '', 4000); }
 
   buildList();
-  note('レイヤー名をクリックして選択 → ドラッグ / 矢印キーで調整');
+  applyState();
+  // the startup hint must not bury a warning about a discarded snapshot
+  note(startupNote || 'レイヤー名をクリックして選択 → ドラッグ / 矢印キーで調整');
 })();
 </script>
 </body>
