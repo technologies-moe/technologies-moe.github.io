@@ -79,7 +79,8 @@
           "goto": "action:night",
           "aria": "",
           "hidden": true,
-          "when": "sleep"
+          "when": "sleep",
+          "beacon": true
         }
       ]
     },

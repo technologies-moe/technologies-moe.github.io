@@ -116,7 +116,8 @@ window.Diorama = (function () {
         // dot + caption are ONE button: the caption is always readable and the
         // hit area is big enough to catch even though the pin drifts with parallax
         pl.innerHTML = pins.map((p, j) =>
-          `<div class="hotspot${p.hidden ? ' is-hidden' : ''}" ` +
+          `<div class="hotspot${p.hidden ? ' is-hidden' : ''}` +
+          `${p.beacon ? ' is-beacon' : ''}" ` +
           `style="left:${p.x}%;top:${p.y}%">` +
           `<button class="hotspot-dot" data-goto="${p.goto}" ` +
           `style="--ping:${(j * 0.45).toFixed(2)}s" aria-label="${p.aria || p.label}"` +

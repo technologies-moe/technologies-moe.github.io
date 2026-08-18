@@ -4,6 +4,39 @@
    and a game over. Loaded by index.html only.
    ============================================================ */
 
+/* ---------------- the beacon ----------------
+   A 60px invisible target that only exists for six hours a day is a target
+   nobody finds. The keyboard is RGB-backlit, so the hint is a backlight that
+   stutters: two quick flickers, then a long dark stretch. It reads as the board
+   glitching rather than as a button, which is the point — the egg still has to
+   be noticed rather than announced. */
+.hotspot.is-beacon .hotspot-dot::after{
+  content:"";
+  position:absolute; inset:-14%;
+  border-radius:22px;
+  background:
+    radial-gradient(closest-side, rgba(255,120,190,.75), rgba(190,90,255,.28) 55%, transparent 78%);
+  opacity:0;
+  pointer-events:none;
+  animation:beacon 5.2s ease-in-out infinite;
+}
+@keyframes beacon{
+  0%,100%{opacity:0}
+  2%  {opacity:.85}
+  4.5%{opacity:.06}
+  6.5%{opacity:.7}
+  9%  {opacity:.12}
+  11% {opacity:.5}
+  16% {opacity:0}
+}
+/* hovering is the confirmation that it is a thing, so the stutter gets out of
+   the way and the normal hidden-pin hover glow takes over */
+.hotspot.is-beacon .hotspot-dot:hover::after,
+.hotspot.is-beacon .hotspot-dot:focus-visible::after{animation:none; opacity:0}
+@media (prefers-reduced-motion:reduce){
+  .hotspot.is-beacon .hotspot-dot::after{animation:none; opacity:.24}
+}
+
 #night{
   position:fixed; inset:0; z-index:120;
   display:none;
