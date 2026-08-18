@@ -104,7 +104,10 @@ window.Diorama = (function () {
 
       // pins ride at their prop's depth, in their own layer so the counter-scale
       // that keeps the chrome a constant on-screen size stays isolated
-      const pins = L.pins || (L.pin ? [L.pin] : []);
+      // a pin may carry `when` of its own, so a prop that exists in both states
+      // can still hide a hotspot that only belongs to one of them
+      const pins = (L.pins || (L.pin ? [L.pin] : []))
+        .filter(p => !p.when || now === 'all' || p.when === now);
       if (pins.length) {
         const pl = document.createElement('div');
         pl.className = 'layer hs-layer';

@@ -15,6 +15,8 @@
 <meta property="og:image" content="https://www.technologies.moe/assets/room/ogp.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<link rel="stylesheet" href="assets/night.css">
+
 <link rel="preload" as="image" href="assets/room/01-room.webp">
 <link rel="preload" as="image" href="assets/room/09-character.webp">
 
@@ -1043,6 +1045,7 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
 </div>
 
 <script src="assets/ripple.js"></script>
+<script src="assets/night.js"></script>
 <script src="assets/diorama.js"></script>
 <script>
 (async () => {
@@ -1124,6 +1127,11 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
     const btn = e.target.closest('[data-goto]');
     if (!btn) return;
     const target = btn.dataset.goto;
+    // "action:name" runs something in place instead of navigating
+    if (target.startsWith('action:')) {
+      if (target === 'action:night' && window.Night) Night.open();
+      return;
+    }
     if (!target.startsWith('#')) { location.href = target; return; }
     const t = document.querySelector(target);
     if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });

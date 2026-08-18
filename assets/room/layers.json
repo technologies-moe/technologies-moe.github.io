@@ -58,19 +58,30 @@
       "sy": 0.6494,
       "tx": -24.7,
       "ty": 4.57,
-      "pin": {
-        "x": 13,
-        "y": 38,
-        "label": "WHAT WE WRITE",
-        "goto": "#about",
-        "aria": "技術の話へ"
-      },
       "shade": {
         "x": 37.1,
         "y": 87.0,
         "w": 4.5,
         "h": 1.6
-      }
+      },
+      "pins": [
+        {
+          "x": 13,
+          "y": 38,
+          "label": "WHAT WE WRITE",
+          "goto": "#about",
+          "aria": "技術の話へ"
+        },
+        {
+          "x": 14.95,
+          "y": 63.55,
+          "label": "？",
+          "goto": "action:night",
+          "aria": "",
+          "hidden": true,
+          "when": "sleep"
+        }
+      ]
     },
     {
       "id": "chair",

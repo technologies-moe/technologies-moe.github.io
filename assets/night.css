@@ -1,0 +1,226 @@
+/* ============================================================
+   night.css — the 02:00-08:00 easter egg behind the keyboard.
+   Visual novel choice box, a quiz, a defence system that bites,
+   and a game over. Loaded by index.html only.
+   ============================================================ */
+
+#night{
+  position:fixed; inset:0; z-index:120;
+  display:none;
+  align-items:flex-end; justify-content:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:
+    radial-gradient(120% 90% at 50% 20%, rgba(80,20,60,.35), transparent 60%),
+    rgba(8,4,14,.86);
+  backdrop-filter:blur(7px);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",-apple-system,
+              BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+  color:#f2eaf6;
+  -webkit-font-smoothing:antialiased;
+  opacity:0; transition:opacity .35s ease;
+}
+#night.on{display:flex; opacity:1}
+
+/* Entrance animations fill `backwards`, not `both`. Both look identical once the
+   animation has run; `backwards` just declines to own the resting state, so the
+   box is visible from its own styles if the animation never plays. The gentleman
+   points and their caption keep `both` — those are meant to end invisible. */
+
+/* ---------------- the choice box ---------------- */
+.nv{
+  width:min(720px,100%);
+  border:1px solid rgba(255,61,146,.45);
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(30,14,40,.92), rgba(16,8,24,.96));
+  box-shadow:0 30px 80px -30px #000, inset 0 1px 0 rgba(255,255,255,.07);
+  padding:clamp(1.2rem,3vw,1.8rem);
+  animation:nvIn .38s cubic-bezier(.2,.8,.3,1) backwards;
+}
+@keyframes nvIn{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none}}
+
+.nv-who{
+  display:inline-block;
+  font-size:.64rem; font-weight:800; letter-spacing:.24em;
+  color:#ff6aa8;
+  border:1px solid currentColor; border-radius:999px;
+  padding:.25rem .85rem; margin-bottom:.9rem;
+}
+.nv-text{
+  font-size:clamp(1.05rem,2.6vw,1.35rem);
+  font-weight:700; line-height:1.7; letter-spacing:-.01em;
+  min-height:3.4em;
+}
+.nv-text .hint{
+  display:block; margin-top:.6rem;
+  font-size:.82rem; font-weight:500; color:#b6a5c4; letter-spacing:0;
+}
+
+/* ---------------- choices ---------------- */
+.nv-opts{display:grid; gap:.6rem; margin-top:1.2rem}
+.nv-opt{
+  display:block; width:100%; text-align:left;
+  font:inherit; font-size:.98rem; font-weight:600; color:inherit;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;
+  padding:.85rem 1.1rem .85rem 2.6rem;
+  cursor:pointer; position:relative;
+  transition:background .2s, border-color .2s, transform .2s;
+}
+.nv-opt::before{
+  content:"▸";
+  position:absolute; left:1.1rem; color:#ff3d92;
+  opacity:0; transform:translateX(-4px);
+  transition:opacity .2s, transform .2s;
+}
+.nv-opt:hover,.nv-opt:focus-visible{
+  background:rgba(255,61,146,.12);
+  border-color:rgba(255,61,146,.55);
+  transform:translateX(3px);
+  outline:none;
+}
+.nv-opt:hover::before,.nv-opt:focus-visible::before{opacity:1; transform:none}
+
+.nv-lives{
+  margin-top:1rem; font-size:.72rem; letter-spacing:.16em;
+  color:#8d7c9b; font-weight:700;
+}
+.nv-lives b{color:#ff6aa8}
+
+/* ---------------- the reward ---------------- */
+/* the reward is a tall picture, so the overlay centres it and the box is sized
+   by the image's height rather than the column width */
+#night.shot{align-items:center}
+.nv-shot{
+  max-width:min(560px,100%);
+  border:1px solid rgba(255,61,146,.45);
+  border-radius:18px; overflow:hidden;
+  box-shadow:0 30px 90px -30px #000;
+  background:#1a1020;
+  cursor:zoom-out;
+  animation:nvIn .5s cubic-bezier(.2,.8,.3,1) backwards;
+  padding:0; display:block;
+}
+.nv-shot img{
+  display:block;
+  max-height:calc(88svh - 3.6rem);
+  max-width:100%;
+  width:auto; height:auto;
+}
+.nv-shot figcaption{
+  padding:.85rem 1.1rem;
+  border-top:1px solid rgba(255,255,255,.12);
+  font-size:.8rem; color:#b6a5c4;
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+.nv-shot figcaption b{color:#ff6aa8; font-weight:700}
+
+/* ---------------- shock ---------------- */
+#night.zap{background:rgba(60,10,30,.9)}
+.zapper{
+  position:fixed; inset:0; pointer-events:none; z-index:130;
+  display:none;
+  mix-blend-mode:screen;
+}
+.zapper.on{display:block; animation:zapFlash .62s steps(1,end) 3}
+@keyframes zapFlash{
+  0%,100%{background:transparent}
+  8%  {background:rgba(180,225,255,.85)}
+  14% {background:transparent}
+  26% {background:rgba(255,240,255,.65)}
+  32% {background:transparent}
+  55% {background:rgba(140,200,255,.5)}
+  60% {background:transparent}
+}
+.zapper svg{position:absolute; inset:0; width:100%; height:100%}
+.zapper path{
+  stroke:#cdefff; stroke-width:2.5; fill:none;
+  filter:drop-shadow(0 0 8px #7fd4ff) drop-shadow(0 0 22px #3aa0ff);
+  stroke-dasharray:1400; stroke-dashoffset:1400;
+  animation:bolt .62s ease-out 3;
+}
+@keyframes bolt{
+  0%  {stroke-dashoffset:1400; opacity:0}
+  10% {opacity:1}
+  45% {stroke-dashoffset:0; opacity:1}
+  70% {opacity:.25}
+  100%{stroke-dashoffset:0; opacity:0}
+}
+@keyframes shake{
+  0%,100%{transform:translate(0,0)}
+  20%{transform:translate(-9px,4px)}
+  40%{transform:translate(8px,-5px)}
+  60%{transform:translate(-6px,-3px)}
+  80%{transform:translate(5px,4px)}
+}
+body.zapping{animation:shake .34s linear 4}
+
+/* ---------------- gentleman points ---------------- */
+.gent{
+  position:fixed; left:50%; top:50%; z-index:130;
+  transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.gent .plus{
+  font-size:clamp(3rem,12vw,7rem); font-weight:900;
+  color:#ffd979; letter-spacing:-.04em;
+  text-shadow:0 0 24px rgba(255,200,90,.75), 0 6px 0 rgba(120,70,0,.5);
+  animation:plusUp 1.5s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes plusUp{
+  0%  {opacity:0; transform:translateY(26px) scale(.7)}
+  22% {opacity:1; transform:translateY(0) scale(1.12)}
+  36% {transform:scale(1)}
+  75% {opacity:1}
+  100%{opacity:0; transform:translateY(-46px) scale(1)}
+}
+.gent .cap{
+  margin-top:.4rem;
+  font-size:clamp(.95rem,2.6vw,1.25rem); font-weight:800;
+  color:#fff3d6; text-shadow:0 2px 12px rgba(0,0,0,.8);
+  animation:capIn 1.5s ease both;
+}
+@keyframes capIn{
+  0%{opacity:0} 20%{opacity:1} 78%{opacity:1} 100%{opacity:0}
+}
+
+/* ---------------- game over ---------------- */
+#gameover{
+  position:fixed; inset:0; z-index:140;
+  display:none; place-items:center;
+  background:rgba(6,0,2,.93);
+  cursor:pointer;
+}
+#gameover.on{display:grid; animation:goIn .5s ease backwards}
+@keyframes goIn{from{opacity:0} to{opacity:1}}
+#gameover .splat{position:absolute; inset:0; pointer-events:none}
+#gameover .splat svg{width:100%; height:100%}
+#gameover .go{
+  position:relative; text-align:center;
+  font-size:clamp(2.6rem,13vw,8rem);
+  font-weight:900; letter-spacing:-.05em; line-height:1;
+  color:#a80d1c;
+  text-shadow:0 0 30px rgba(190,10,25,.75), 0 4px 0 #4d0009;
+  animation:goPunch .7s cubic-bezier(.2,.9,.3,1) backwards;
+  user-select:none;
+}
+@keyframes goPunch{
+  0%{opacity:0; transform:scale(1.9) rotate(-4deg)}
+  60%{opacity:1; transform:scale(.97) rotate(0)}
+  100%{opacity:1; transform:scale(1)}
+}
+#gameover .go small{
+  display:block; margin-top:1.2rem;
+  font-size:.16em; font-weight:800; letter-spacing:.3em;
+  color:#e0a5ad; text-shadow:none;
+  animation:blinkSlow 1.6s ease-in-out infinite;
+}
+@keyframes blinkSlow{0%,100%{opacity:.35} 50%{opacity:1}}
+
+/* ---------------- reduced motion ---------------- */
+@media (prefers-reduced-motion:reduce){
+  .nv,.nv-shot,.gent .plus,.gent .cap,#gameover,#gameover .go{animation:none}
+  .zapper.on,.zapper path,body.zapping{animation:none}
+  .zapper.on{background:rgba(180,225,255,.35)}
+  #gameover .go small{animation:none; opacity:1}
+}
