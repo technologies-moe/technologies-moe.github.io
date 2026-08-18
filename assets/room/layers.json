@@ -1,0 +1,129 @@
+{
+  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth.",
+  "perspective": 2000,
+  "amp": {
+    "x": 58,
+    "y": 30
+  },
+  "scroll": {
+    "zoom": 190,
+    "lift": -70
+  },
+  "layers": [
+    {
+      "id": "room",
+      "file": "01-room.webp",
+      "par": 0.25,
+      "sx": 1,
+      "sy": 1,
+      "tx": 0,
+      "ty": 0,
+      "pins": [
+        {
+          "x": 32,
+          "y": 27,
+          "label": "WORKS",
+          "goto": "#works",
+          "aria": "既刊・Works へ"
+        },
+        {
+          "x": 69,
+          "y": 22,
+          "label": "MEMBER 募集",
+          "goto": "#join",
+          "aria": "メンバー募集へ"
+        },
+        {
+          "x": 89.5,
+          "y": 28,
+          "label": "ALIBI",
+          "goto": "#alibi",
+          "aria": "Alibi 紹介へ"
+        },
+        {
+          "x": 80,
+          "y": 27,
+          "label": "？",
+          "goto": "secret.html",
+          "aria": "",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "id": "desk",
+      "file": "07-desk.webp",
+      "par": 0.7,
+      "sx": 0.55,
+      "sy": 0.55,
+      "tx": -24.7,
+      "ty": -0.4,
+      "pin": {
+        "x": 13,
+        "y": 38,
+        "label": "WHAT WE WRITE",
+        "goto": "#about",
+        "aria": "技術の話へ"
+      }
+    },
+    {
+      "id": "chair",
+      "file": "08-chair.webp",
+      "par": 0.88,
+      "sx": 0.92,
+      "sy": 0.92,
+      "tx": 5,
+      "ty": 35
+    },
+    {
+      "id": "character",
+      "file": "09-character.webp",
+      "par": 1,
+      "sx": 0.94,
+      "sy": 0.94,
+      "tx": -0.9,
+      "ty": 2.9,
+      "speech": {
+        "x": 66,
+        "y": 11,
+        "lines": [
+          "……あ、来てくれたんだ。",
+          "新刊、まだ書いてる途中。",
+          "GPU、今日もあついね。",
+          "「動いた」で終わらせないの、けっこう大事だと思う。",
+          "そこの水着、押しても何も出ないよ。……たぶん。",
+          "C109、受かるといいな。"
+        ]
+      },
+      "faces": {
+        "base": "09-character.webp",
+        "half": "09-half-eyes.webp",
+        "blink": "09-blink-eyes.webp"
+      },
+      "blink": {
+        "minGap": 2600,
+        "maxGap": 7200,
+        "lead": 45,
+        "hold": 95,
+        "tail": 45,
+        "doubleChance": 0.28
+      }
+    },
+    {
+      "id": "books",
+      "file": "10-books.webp",
+      "par": 1.55,
+      "sx": 0.53,
+      "sy": 0.53,
+      "tx": -25.6,
+      "ty": 27.6,
+      "pin": {
+        "x": 21,
+        "y": 72,
+        "label": "C109 NEW RELEASE",
+        "goto": "#c109",
+        "aria": "C109 新刊へ"
+      }
+    }
+  ]
+}
