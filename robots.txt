@@ -1,4 +1,12 @@
+# secret.html と tune.html は Disallow しない。
+# クロールを禁じるとページ内の noindex を読んでもらえず、外部リンク経由で
+# 逆にインデックスされうるため、両ページの meta robots に任せている。
+#
+# docs/ は逆。.md には meta robots を書けないので、Disallow が唯一の手段。
+# ただしこれはインデックス避けであって非公開ではない。リポジトリ直下が
+# Pages の公開ルートで .nojekyll が効いているため、URL を直に叩けば読める。
 User-agent: *
 Allow: /
+Disallow: /docs/
 
 Sitemap: https://www.technologies.moe/sitemap.xml

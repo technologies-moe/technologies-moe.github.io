@@ -1,655 +1,1379 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>technologies.moe - AI・GPU・LLMの技術同人誌サークル</title>
-  <meta name="description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル。設計思想・トレードオフ・実測結果をきちんと書きます。">
-  <meta name="keywords" content="技術同人誌,AI,GPU,LLM,CUDA,マルチエージェント,分散システム,技術書典,コミックマーケット">
-  <meta name="author" content="technologies.moe">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.technologies.moe/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>technologies.moe — C109</title>
+<meta name="description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル。コミックマーケット109 参加予定。">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#f3ecf5">
+<link rel="canonical" href="https://www.technologies.moe/">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.technologies.moe/">
-  <meta property="og:title" content="technologies.moe - AI・GPU・LLMの技術同人誌サークル">
-  <meta property="og:description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
-  <meta property="og:site_name" content="technologies.moe">
-  <meta property="og:locale" content="ja_JP">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.technologies.moe/">
+<meta property="og:title" content="technologies.moe — C109">
+<meta property="og:description" content="ブラックボックス化しがちな技術を、ちゃんと理解できる形で残す。技術同人誌サークル technologies.moe">
+<meta property="og:image" content="https://www.technologies.moe/assets/room/ogp.jpg">
+<meta property="og:site_name" content="technologies.moe">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:url" content="https://www.technologies.moe/">
-  <meta name="twitter:title" content="technologies.moe - AI・GPU・LLMの技術同人誌サークル">
-  <meta name="twitter:description" content="AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "technologies.moe",
+  "url": "https://www.technologies.moe",
+  "description": "AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル",
+  "sameAs": ["https://github.com/technologies-moe"]
+}
+</script>
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "technologies.moe",
-    "url": "https://www.technologies.moe",
-    "description": "AI・GPU・LLM・分散システムなど、ブラックボックス化しがちな技術を理解できる形で残す技術同人誌サークル",
-    "sameAs": [
-      "https://github.com/technologies-moe"
-    ]
-  }
-  </script>
+<link rel="stylesheet" href="assets/night.css">
 
-  <style>
-    :root {
-      --bg: #0a0a0f;
-      --bg-secondary: rgba(22, 27, 34, 0.8);
-      --text: #e6edf3;
-      --text-muted: #8b949e;
-      --accent: #00d4ff;
-      --accent-secondary: #7b2cbf;
-      --border: rgba(48, 54, 61, 0.6);
-    }
+<link rel="preload" as="image" href="assets/room/01-room.webp">
+<link rel="preload" as="image" href="assets/room/09-character.webp">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+:root{
+  --ink:#33263c;
+  --ink-soft:#6d5d78;
+  --paper:#faf5fb;
+  --pink:#ff3d92;
+  --pink-soft:#ffd6e8;
+  --lav:#b8a2d8;
+  --mint:#4fc9bd;
+  --line:rgba(120,90,140,.18);
+  --shadow:0 18px 50px -20px rgba(80,40,100,.35);
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-    #canvas-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
+body{
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+  color:var(--ink);
+  background:#e9e1ee;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
 
-    .content {
-      position: relative;
-      z-index: 1;
-    }
+/* ============ DIORAMA ============ */
+.diorama{
+  position:fixed; inset:0;
+  overflow:hidden;
+  z-index:0;
+  background:#ded4e6;
+  perspective:2000px;
+}
+.diorama::after{ /* vignette + depth dimming on scroll */
+  content:"";
+  position:absolute; inset:-2%;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(60,35,80,.30) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.18) 0%, transparent 22%);
+  z-index:60;
+}
 
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-    }
+/* always 16:9, always covering the viewport; JS anchors the focus point
+   (stage %) to the centre of the screen, so tall phones keep the character */
+.camera{
+  position:absolute;
+  left:50%; top:50%;
+  width:max(100vw, 100svh * 1.7768);
+  height:max(100svh, 100vw / 1.7768);
+  transform:translate(-50%,-50%);
+  transform-style:preserve-3d;
+  /* the camera sits on the z=0 plane, so without this it hit-tests IN FRONT of
+     every layer with a negative z and swallows their pins */
+  pointer-events:none;
+  will-change:transform;
+}
 
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #00d4ff 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient 4s ease infinite;
-    }
+.layer{
+  position:absolute; inset:0;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+}
+/* every cut-out is a full-frame sheet; --sx/--sy/--tx/--ty place it back into
+   the composition of result.png (centre of the scaled sheet at 50+tx / 50+ty).
+   x and y scale separately: some props are drawn at a different aspect than the
+   spot they have to sit in (curtain vs window, rack legs vs floor line). */
+.layer img{
+  position:absolute;
+  width:calc(var(--sx,1) * 100%);
+  height:calc(var(--sy,1) * 100%);
+  left:calc((50 + var(--tx,0) - var(--sx,1) * 50) * 1%);
+  top:calc((50 + var(--ty,0) - var(--sy,1) * 50) * 1%);
+  object-fit:fill;
+  display:block;
+  user-select:none; -webkit-user-drag:none;
+}
+.layer img[data-face]{transition:none}
+.layer img[data-face]:not([data-face=base]){will-change:opacity}
 
-    @keyframes gradient {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
+/* contact shadow under a prop's feet — the cut-outs carry no floor shadow of
+   their own, so free-standing furniture reads as hovering without this */
+.foot-shade{
+  position:absolute;
+  left:var(--fx); top:var(--fy);
+  width:var(--fw); height:var(--fh);
+  transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,
+    rgba(62,38,82,.42), rgba(62,38,82,.16) 55%, transparent 78%);
+  pointer-events:none;
+}
 
-    .hero .tagline {
-      font-size: 1.3rem;
-      color: #ffffff;
-      max-width: 600px;
-      margin-bottom: 3rem;
-      text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4), 0 0 60px rgba(123, 44, 191, 0.3);
-      font-weight: 500;
-    }
+/* ---- time-of-day grade ----
+   Only the room base sheet is repainted per time of day; the props and the
+   character keep their midday lighting, so they get a light CSS grade to sit
+   in the scene instead of floating on top of it. The pins and speech bubble
+   are UI, not scenery — they stay ungraded and legible. */
+.diorama.t-morning .layer:not([data-id="room"]) img{filter:brightness(1.03)}
+.diorama.t-evening .layer:not([data-id="room"]) img{filter:sepia(.16) saturate(1.12) brightness(.95)}
+.diorama.t-night   .layer:not([data-id="room"]) img{filter:brightness(.62) saturate(.8) contrast(1.05)}
+/* the window beam is sunlight; dusk halves it and night puts it out */
+.diorama.t-evening .sunbeam{opacity:.45}
+.diorama.t-night .sunbeam{display:none}
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      animation: bounce 2s ease infinite;
-    }
+/* window light breathing */
+.sunbeam{
+  position:absolute; inset:0;
+  pointer-events:none;
+  z-index:55;
+  background:
+    radial-gradient(70% 90% at 6% 8%, rgba(255,246,225,.55) 0%, rgba(255,240,220,.16) 38%, transparent 68%);
+  mix-blend-mode:screen;
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.75}50%{opacity:1}}
 
-    .scroll-indicator svg {
-      width: 32px;
-      height: 32px;
-      stroke: var(--accent);
-      opacity: 0.6;
-    }
+#dust{
+  position:absolute; inset:0;
+  z-index:56;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
+/* boot-up assembly animation */
+.layer{opacity:0}
+.booted .layer{
+  animation:layerIn .9s cubic-bezier(.2,.7,.25,1) both;
+  animation-delay:var(--delay,0s);
+}
+@keyframes layerIn{
+  from{opacity:0; filter:blur(6px)}
+  to{opacity:1; filter:blur(0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .booted .layer{animation:none; opacity:1}
+  .sunbeam{animation:none}
+}
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
+/* ============ HOTSPOTS ============ */
+.hotspot{
+  position:absolute;
+  transform:translate(-50%,-50%) scale(var(--cs,1));
+  transform-origin:center;
+  pointer-events:auto;
+}
+.layer{pointer-events:none}
 
-    section {
-      margin-bottom: 4rem;
-      padding: 2.5rem;
-      background: var(--bg-secondary);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+/* one pill = dot + caption. always legible, and a big enough target that a pin
+   drifting under the cursor is still clickable */
+.hotspot-dot{
+  appearance:none; border:0;
+  display:flex; align-items:center; gap:.45rem;
+  padding:6px 13px 6px 8px;
+  border-radius:999px;
+  background:rgba(44,28,54,.76);
+  color:#fff;
+  cursor:pointer;
+  position:relative;
+  white-space:nowrap;
+  font:inherit;
+  box-shadow:0 10px 26px -12px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.14) inset;
+  transition:background .25s, transform .25s cubic-bezier(.2,.8,.3,1), box-shadow .25s;
+}
+.hotspot-dot .dot{
+  width:9px; height:9px; border-radius:50%;
+  background:var(--pink);
+  flex:none;
+  position:relative;
+}
+.hotspot-dot .dot::before{
+  content:"";
+  position:absolute; inset:-5px;
+  border-radius:50%;
+  border:1.5px solid rgba(255,61,146,.65);
+  animation:ping 2.6s ease-out infinite;
+  animation-delay:var(--ping,0s);
+}
+.hotspot-dot .cap{
+  font-size:11px; font-weight:800; letter-spacing:.09em;
+}
+@keyframes ping{
+  0%{transform:scale(.7); opacity:.9}
+  70%,100%{transform:scale(1.6); opacity:0}
+}
+.hotspot-dot:hover,.hotspot-dot:focus-visible{
+  background:var(--pink);
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px -12px rgba(255,61,146,.9);
+  outline:none;
+}
+.hotspot-dot:active{transform:translateY(0) scale(.97)}
 
-    section:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-    }
+/* hidden pin: no chrome at all, just a target you stumble onto */
+.hotspot.is-hidden .hotspot-dot{
+  width:64px; height:64px; padding:0;
+  background:transparent; box-shadow:none; border-radius:16px;
+}
+.hotspot.is-hidden .hotspot-dot .dot,
+.hotspot.is-hidden .hotspot-dot .dot::before{display:none}
+.hotspot.is-hidden .hotspot-dot:hover{
+  background:radial-gradient(closest-side, rgba(255,61,146,.22), transparent 72%);
+  transform:none; box-shadow:none;
+}
+@media (prefers-reduced-motion:reduce){.hotspot-dot .dot::before{animation:none;opacity:.4}}
 
-    h2 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+/* ============ NAV ============ */
+/* over the hero the bar stays clear so the neon sign behind it reads;
+   it only becomes a real surface once the paper section arrives */
+.nav{
+  position:fixed; top:0; left:0; right:0;
+  z-index:40;
+  display:flex; align-items:center; gap:1.2rem;
+  padding:.85rem clamp(1rem,4vw,2.6rem);
+  background:linear-gradient(180deg, rgba(250,245,251,.34), transparent);
+  border-bottom:1px solid transparent;
+  transition:background .4s, border-color .4s, box-shadow .4s, backdrop-filter .4s;
+}
+.nav .nav-brand,.nav .nav-links a:not(.nav-cta){
+  text-shadow:0 1px 10px rgba(255,255,255,.85), 0 1px 2px rgba(255,255,255,.9);
+}
+.nav.solid{
+  background:rgba(250,245,251,.94);
+  backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom-color:var(--line);
+  box-shadow:0 10px 30px -22px rgba(70,30,90,.6);
+}
+.nav.solid .nav-brand,.nav.solid .nav-links a:not(.nav-cta){text-shadow:none}
+.nav-brand{
+  font-weight:800; letter-spacing:-.02em;
+  font-size:1.02rem;
+  color:var(--ink);
+  text-decoration:none;
+  display:flex; align-items:center; gap:.5rem;
+}
+.nav-brand::before{
+  content:""; width:10px; height:10px; border-radius:3px;
+  background:linear-gradient(135deg,var(--pink),var(--lav));
+}
+/* over the hero the links would sit right on top of the neon sign, so only the
+   logo stays; they slide in with the bar (or on keyboard focus) */
+.nav-links{
+  margin-left:auto; display:flex; gap:1.4rem; align-items:center;
+  opacity:0; transform:translateY(-8px); pointer-events:none;
+  transition:opacity .35s, transform .35s;
+}
+.nav.solid .nav-links,.nav:focus-within .nav-links{
+  opacity:1; transform:none; pointer-events:auto;
+}
+.nav-links a{
+  font-size:.86rem; font-weight:600; letter-spacing:.04em;
+  color:var(--ink-soft); text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--pink)}
+.nav-cta{
+  background:var(--ink); color:#fff !important;
+  padding:.42rem 1rem; border-radius:999px;
+}
+.nav-cta:hover{background:var(--pink)}
+@media (max-width:720px){
+  .nav-links a:not(.nav-cta){display:none}
+}
 
-    h2::before {
-      content: "";
-      width: 4px;
-      height: 1.4rem;
-      background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
-      border-radius: 2px;
-    }
+/* ============ HERO ============ */
+/* copy sits bottom-right: the bottom-left of the artwork is the new-release
+   stack, which is the whole point of the picture */
+.hero{
+  position:relative;
+  z-index:10;
+  height:100svh;
+  display:grid;
+  align-content:end;
+  justify-items:end;
+  text-align:right;
+  padding:0 clamp(1.2rem,5vw,4.5rem) clamp(3.5rem,9vh,6rem);
+  pointer-events:none;
+}
+.hero > *{pointer-events:auto}
+.hero::before{ /* keeps the white type legible over the bright artwork */
+  content:"";
+  position:absolute; inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(115% 80% at 98% 108%, rgba(42,22,54,.88) 0%, rgba(42,22,54,.52) 42%, transparent 72%),
+    linear-gradient(180deg, transparent 54%, rgba(42,22,54,.3) 88%, rgba(42,22,54,.14) 100%);
+}
 
-    p {
-      margin-bottom: 1rem;
-      color: var(--text-muted);
-    }
+.badge{
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-size:.76rem; font-weight:800; letter-spacing:.18em;
+  padding:.42rem .95rem;
+  border-radius:999px;
+  background:rgba(46,30,56,.72);
+  color:#ffd9ea;
+  backdrop-filter:blur(6px);
+  margin-bottom:1.1rem;
+  box-shadow:0 10px 30px -16px rgba(0,0,0,.9);
+}
+.badge b{color:#fff}
+.badge i{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 0 10px var(--pink);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-    .emphasis {
-      color: var(--text);
-      font-weight: 500;
-    }
+.hero h1{
+  font-size:clamp(2.4rem,7.4vw,5.4rem);
+  font-weight:800;
+  letter-spacing:-.035em;
+  line-height:1;
+  color:#fff;
+  text-shadow:
+    0 2px 0 rgba(120,70,140,.25),
+    0 10px 40px rgba(70,30,90,.55),
+    0 1px 3px rgba(70,30,90,.5);
+}
+.hero h1 .dot{color:var(--pink)}
+.hero .tagline{
+  margin-top:1.1rem;
+  max-width:34ch;
+  font-size:clamp(.95rem,1.7vw,1.18rem);
+  font-weight:600;
+  color:#fff;
+  text-shadow:0 2px 14px rgba(60,25,80,.85), 0 1px 3px rgba(60,25,80,.7);
+}
+.hero-actions{
+  margin-top:2rem;
+  display:flex; flex-wrap:wrap; gap:.75rem;
+  justify-content:flex-end;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.78rem 1.5rem;
+  border-radius:999px;
+  font-size:.9rem; font-weight:700; letter-spacing:.03em;
+  text-decoration:none;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1), box-shadow .25s, background .25s;
+}
+.btn-primary{
+  background:var(--pink); color:#fff;
+  box-shadow:0 14px 34px -14px rgba(255,61,146,.95);
+}
+.btn-ghost{
+  background:rgba(255,255,255,.85); color:var(--ink);
+  backdrop-filter:blur(8px);
+  box-shadow:0 12px 30px -18px rgba(60,25,80,.9);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary:hover{background:#ff217f}
 
-    ul {
-      list-style: none;
-      margin-bottom: 1rem;
-    }
+.scroll-hint{
+  position:absolute;
+  left:50%; bottom:1.4rem;
+  transform:translateX(-50%);
+  display:grid; justify-items:center; gap:.4rem;
+  font-size:.66rem; font-weight:700; letter-spacing:.24em;
+  color:rgba(255,255,255,.9);
+  text-shadow:0 2px 10px rgba(60,25,80,.9);
+}
+.scroll-hint .rail{
+  width:1px; height:34px;
+  background:linear-gradient(180deg, rgba(255,255,255,.9), transparent);
+  animation:drop 2s ease-in-out infinite;
+  transform-origin:top;
+}
+@keyframes drop{0%,100%{transform:scaleY(.4);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.scroll-hint .rail,.badge i{animation:none}}
 
-    li {
-      padding: 0.6rem 0;
-      padding-left: 1.5rem;
-      position: relative;
-      color: var(--text-muted);
-    }
+/* ============ CONTENT ============ */
+.content{
+  position:relative;
+  z-index:20;
+  background:var(--paper);
+  padding-top:clamp(3rem,7vh,5.5rem);
+}
+.content::before{ /* short dissolve into paper — any longer and it washes out
+                     the floor, which kills the contact between props and ground */
+  content:"";
+  position:absolute; left:0; right:0; top:-88px; height:88px;
+  background:linear-gradient(180deg, rgba(250,245,251,0), rgba(250,245,251,.45) 62%, var(--paper));
+  pointer-events:none;
+}
 
-    li::before {
-      content: "›";
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-weight: bold;
-    }
+.wrap{
+  max-width:1040px;
+  margin:0 auto;
+  padding:0 clamp(1.2rem,5vw,2rem);
+}
 
-    .themes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
+.sect{margin-bottom:clamp(4rem,9vh,7rem); position:relative; scroll-margin-top:92px}
+.sect-head{
+  display:flex; align-items:baseline; gap:.9rem;
+  margin-bottom:1.8rem;
+}
+.sect-head h2{
+  font-size:clamp(1.5rem,3.4vw,2.1rem);
+  font-weight:800; letter-spacing:-.02em;
+}
+.sect-head .en{
+  font-size:.72rem; font-weight:800; letter-spacing:.22em;
+  color:var(--pink);
+  text-transform:uppercase;
+}
+.sect-head::after{
+  content:"";
+  flex:1; height:1px;
+  background:linear-gradient(90deg,var(--line),transparent);
+}
 
-    .theme-card {
-      padding: 1.25rem;
-      background: rgba(0, 212, 255, 0.05);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
+p{color:var(--ink-soft)}
+.lead{font-size:1.06rem; color:var(--ink); font-weight:500}
+.em{color:var(--ink); font-weight:700; background:linear-gradient(180deg,transparent 62%,var(--pink-soft) 62%)}
 
-    .theme-card:hover {
-      background: rgba(0, 212, 255, 0.1);
-      border-color: var(--accent);
-    }
+/* release card */
+.release{
+  display:grid;
+  grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  gap:clamp(1.5rem,4vw,3rem);
+  align-items:center;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:clamp(1.4rem,3.5vw,2.6rem);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.release::before{
+  content:"";
+  position:absolute; inset:0;
+  background:radial-gradient(90% 120% at 100% 0%, rgba(255,61,146,.09), transparent 55%);
+  pointer-events:none;
+}
+.release-meta{position:relative}
+.release-tag{
+  display:inline-block;
+  font-size:.68rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink);
+  border:1.5px solid currentColor;
+  border-radius:999px;
+  padding:.22rem .8rem;
+  margin-bottom:1rem;
+}
+.release h3{
+  font-size:clamp(1.4rem,3vw,1.9rem);
+  font-weight:800; letter-spacing:-.02em;
+  margin-bottom:.6rem;
+}
+.spec{
+  list-style:none;
+  margin-top:1.4rem;
+  display:grid; gap:.55rem;
+  border-top:1px dashed var(--line);
+  padding-top:1.2rem;
+}
+.spec li{
+  display:grid;
+  grid-template-columns:6.5rem 1fr;
+  gap:.8rem;
+  font-size:.9rem;
+  color:var(--ink-soft);
+}
+.spec b{
+  font-size:.72rem; font-weight:800; letter-spacing:.12em;
+  color:var(--lav);
+  padding-top:.28rem;
+}
+.spec .tbd{color:var(--ink); font-weight:600}
+.release-art{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  aspect-ratio:16/10;
+  background:#efe6f2;
+  box-shadow:0 20px 50px -26px rgba(80,40,100,.8);
+}
+.release-art img{
+  width:100%; height:100%;
+  object-fit:cover; object-position:22% 62%;
+  display:block;
+  transition:transform 1.2s cubic-bezier(.2,.8,.3,1);
+}
+.release:hover .release-art img{transform:scale(1.05)}
 
-    .theme-card p {
-      margin: 0;
-      color: var(--text);
-      font-size: 0.95rem;
-    }
 
-    .stance {
-      display: grid;
-      gap: 1rem;
-    }
+/* C109 cover: portrait art leads, copy sits beside it.
+   Square-ish corners and a deeper shadow so it reads as a book, not a thumbnail. */
+.release-art.cover{
+  aspect-ratio:1054/1492;
+  border-radius:5px;
+  box-shadow:0 26px 60px -26px rgba(70,30,95,.95), 0 0 0 1px rgba(60,20,80,.08);
+}
+.release-sub{
+  font-size:.82rem; font-weight:700; letter-spacing:.02em;
+  color:var(--lav); margin-bottom:.3rem;
+}
+.toc{list-style:none; display:grid; gap:.42rem; margin:1.3rem 0 .2rem}
+.toc li{
+  position:relative; padding-left:1.6rem;
+  font-size:.9rem; color:var(--ink); font-weight:500;
+}
+.toc li::before{
+  content:"✓";
+  position:absolute; left:0; top:-.05em;
+  color:var(--pink); font-weight:800; font-size:.86rem;
+}
+.toc li.extra{color:var(--ink-soft); font-weight:600}
+.toc li.extra::before{content:"＋"}
 
-    .stance-item {
-      padding: 1.25rem 1.5rem;
-      background: linear-gradient(90deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-      transition: all 0.3s ease;
-    }
+/* grids */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(238px,1fr));
+  gap:1rem;
+}
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:1.4rem 1.5rem;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s, border-color .3s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,61,146,.35);
+  box-shadow:0 22px 44px -26px rgba(90,40,110,.65);
+}
+.card .n{
+  font-size:.7rem; font-weight:800; letter-spacing:.16em;
+  color:var(--pink); display:block; margin-bottom:.5rem;
+}
+.card h3{font-size:1rem; font-weight:700; margin-bottom:.35rem}
+.card p{font-size:.85rem; margin:0}
 
-    .stance-item:hover {
-      background: linear-gradient(90deg, rgba(0, 212, 255, 0.15) 0%, transparent 100%);
-      padding-left: 2rem;
-    }
+/* stance list */
+.stance{display:grid; gap:.7rem; counter-reset:s}
+.stance li{
+  list-style:none;
+  counter-increment:s;
+  display:grid;
+  grid-template-columns:2.4rem 1fr;
+  align-items:center;
+  gap:.4rem;
+  background:#fff;
+  border:1px solid var(--line);
+  border-left:3px solid var(--pink);
+  border-radius:0 14px 14px 0;
+  padding:1rem 1.4rem;
+  font-weight:600;
+  color:var(--ink);
+  transition:padding-left .3s, background .3s;
+}
+.stance li:hover{padding-left:2rem; background:#fffafd}
+.stance li::before{
+  content:"0" counter(s);
+  font-size:.72rem; font-weight:800; letter-spacing:.08em;
+  color:var(--lav);
+}
 
-    .stance-item p {
-      margin: 0;
-      color: var(--text);
-    }
+.bullets{list-style:none; display:grid; gap:.5rem}
+.bullets li{
+  position:relative; padding-left:1.6rem;
+  color:var(--ink-soft);
+}
+.bullets li::before{
+  content:""; position:absolute; left:.3rem; top:.78em;
+  width:6px; height:6px; border-radius:2px;
+  background:var(--lav); transform:rotate(45deg);
+}
 
-    .activities {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
+.two-col{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:clamp(1.5rem,4vw,3rem);
+}
 
-    .tag {
-      background: rgba(123, 44, 191, 0.2);
-      border: 1px solid rgba(123, 44, 191, 0.4);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      color: var(--text);
-      transition: all 0.3s ease;
-    }
+/* tags */
+.tags{display:flex; flex-wrap:wrap; gap:.6rem}
+.tag{
+  font-size:.82rem; font-weight:600;
+  padding:.45rem 1rem;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+  text-decoration:none;
+  transition:all .25s;
+}
+a.tag:hover{border-color:var(--pink); color:var(--pink); transform:translateY(-2px)}
 
-    .tag:hover {
-      background: rgba(123, 44, 191, 0.3);
-      border-color: var(--accent-secondary);
-      transform: scale(1.05);
-    }
+/* members */
+.member{
+  display:flex; align-items:center; gap:1.1rem;
+  max-width:380px;
+  background:#fff; border:1px solid var(--line);
+  border-radius:18px; padding:1.1rem 1.5rem;
+  transition:transform .3s, box-shadow .3s;
+}
+.member:hover{transform:translateY(-3px); box-shadow:var(--shadow)}
+.member img{
+  width:60px; height:60px; border-radius:50%;
+  border:2px solid #fff;
+  box-shadow:0 0 0 2px var(--pink-soft);
+}
+.member h3{font-size:1rem; font-weight:700}
+.member .links{display:flex; gap:.9rem; margin-top:.15rem}
+.member .links a{
+  font-size:.8rem; font-weight:600; color:var(--pink); text-decoration:none;
+}
+.member .links a:hover{text-decoration:underline}
 
-    a.tag {
-      color: var(--text);
-      text-decoration: none;
-    }
+/* join */
+.join{
+  text-align:center;
+  background:linear-gradient(140deg,#fff 0%,#fff5fa 55%,#f6f0fb 100%);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:clamp(2.2rem,5vw,3.4rem);
+  box-shadow:var(--shadow);
+}
+.join h2{font-size:clamp(1.4rem,3vw,1.9rem); font-weight:800; margin-bottom:.6rem}
+.join p{max-width:44ch; margin:0 auto 1.8rem}
 
-    .members {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
+/* the creator call rides next to Join Us as the paper on the corkboard */
+.join-grid{
+  display:grid; gap:1.2rem;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  align-items:stretch;
+}
+.call{
+  position:relative;
+  background:linear-gradient(160deg,#fff 0%,#fff8f0 100%);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:clamp(1.8rem,4vw,2.6rem);
+  box-shadow:var(--shadow);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:1.4rem;
+  align-items:center;
+}
+.call::before{ /* the drawing pin */
+  content:"";
+  position:absolute; top:14px; left:50%;
+  width:11px; height:11px; border-radius:50%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle at 35% 30%, #ff8ec0, var(--pink) 65%);
+  box-shadow:0 2px 4px rgba(120,40,80,.45);
+}
+.call h2{font-size:clamp(1.2rem,2.6vw,1.6rem); font-weight:800; margin-bottom:.2rem}
+.call .sub{font-size:.8rem; font-weight:700; letter-spacing:.14em; color:var(--pink); margin-bottom:.7rem}
+.call .rule-note{
+  display:flex; align-items:center; gap:.7rem;
+  font-size:.82rem; font-weight:800; letter-spacing:.08em;
+  color:var(--ink);
+  margin-bottom:1.1rem;
+}
+.call .rule-note::before,.call .rule-note::after{
+  content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,61,146,.55));
+}
+.call .rule-note::after{background:linear-gradient(90deg, rgba(255,61,146,.55), transparent)}
+.call ul{list-style:none; display:grid; gap:.5rem}
+.call li{
+  font-size:.9rem; color:var(--ink-soft);
+  padding-left:1.4rem; position:relative;
+}
+.call li::before{
+  content:"✓"; position:absolute; left:0;
+  color:var(--mint); font-weight:800;
+}
+.call .paper-btn{
+  border:0; padding:0; background:none; cursor:zoom-in;
+  font:inherit;
+}
+.call .paper{
+  display:block;
+  width:clamp(130px,15vw,210px);
+  height:auto;   /* the height="600" attribute otherwise survives the CSS width
+                    override and stretches the poster vertically */
+  border-radius:10px;
+  transform:rotate(2.5deg);
+  box-shadow:0 12px 26px -12px rgba(80,40,100,.5);
+  border:1px solid rgba(120,90,140,.25);
+  transition:transform .3s;
+}
+.call .paper-btn:hover .paper,.call .paper-btn:focus-visible .paper{transform:rotate(1deg) scale(1.04)}
+.call .fine{font-size:.74rem; color:var(--ink-soft); margin-top:1.1rem}
+@media (max-width:560px){
+  .call{grid-template-columns:1fr}
+  .call .paper{justify-self:center}
+}
 
-    .member-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      background: rgba(0, 212, 255, 0.05);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-    }
+footer{
+  text-align:center;
+  padding:3rem 1.5rem 4rem;
+  font-size:.8rem;
+  color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
 
-    .member-card:hover {
-      background: rgba(0, 212, 255, 0.1);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
+/* reveal on scroll */
+.rv{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
-    .member-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    }
+@media (max-width:820px){
+  .release{grid-template-columns:1fr}
+  .release-art{order:-1; aspect-ratio:16/9}
+  /* the stage is cropped hard on narrow screens — the pins would land off-frame */
+  .hs-layer{display:none}
+  .scroll-hint{display:none}
+}
 
-    .member-info h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-    }
 
-    .member-links {
-      display: flex;
-      gap: 1rem;
-    }
+/* ---- hidden pin: no chrome, just a click target you stumble onto ---- */
+.hotspot.is-hidden .hotspot-dot{
+  width:64px; height:64px;
+  background:transparent; box-shadow:none;
+  border-radius:16px;
+  transition:background .3s;
+}
+.hotspot.is-hidden .hotspot-dot::before,
+.hotspot.is-hidden .hotspot-dot span,
+.hotspot.is-hidden .hotspot-label{display:none}
+.hotspot.is-hidden .hotspot-dot:hover{
+  background:radial-gradient(closest-side, rgba(255,61,146,.22), transparent 72%);
+}
+.hotspot.is-hidden .hotspot-dot:active{transform:scale(.94)}
 
-    .member-links a {
-      font-size: 0.85rem;
-      color: var(--accent);
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
+/* ---- speech bubble ---- */
+.speech{
+  position:absolute;
+  transform:translate(-50%,-50%) scale(var(--cs,1));
+  transform-origin:center;
+  pointer-events:auto;
+}
+.speech-body{
+  font:inherit; text-align:left;
+  max-width:19rem; min-width:9rem;
+  padding:.75rem 1.05rem;
+  border:0; border-radius:16px 16px 16px 4px;
+  background:rgba(255,255,255,.94);
+  color:var(--ink);
+  font-size:.86rem; font-weight:600; line-height:1.65;
+  box-shadow:0 14px 34px -16px rgba(70,30,100,.8), 0 0 0 1px rgba(255,61,146,.18);
+  cursor:pointer;
+  position:relative;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1), box-shadow .25s;
+}
+.speech-body::after{ /* tail pointing down-left, toward her */
+  content:"";
+  position:absolute; left:14px; bottom:-9px;
+  border:5px solid transparent;
+  border-top-color:rgba(255,255,255,.94);
+  border-bottom:0;
+  filter:drop-shadow(0 2px 1px rgba(70,30,100,.18));
+}
+.speech-body:hover{transform:translateY(-2px)}
+.speech-body.swap{opacity:0; transform:translateY(4px)}
+.speech-body{transition:opacity .28s, transform .28s}
 
-    .member-links a:hover {
-      text-shadow: 0 0 10px var(--accent);
-    }
+@media (max-width:820px){
+  .speech-body{max-width:13rem; font-size:.78rem}
+}
 
-    .join-us {
-      text-align: center;
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 44, 191, 0.1) 100%);
-    }
+/* ---- Alibi banner + link rail into the character sub-pages ---- */
+.char-banner{
+  position:relative;
+  border-radius:20px; overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  background:#f7eef4;
+  margin-bottom:1.6rem;
+}
+.char-banner img{display:block; width:100%; height:auto}
+.char-banner .tag{
+  position:absolute; left:clamp(.9rem,3vw,1.6rem); top:clamp(.9rem,3vw,1.4rem);
+  font-size:.6rem; font-weight:800; letter-spacing:.24em;
+  color:#7a4a63;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(122,74,99,.25);
+  border-radius:999px; padding:.28rem .85rem;
+  backdrop-filter:blur(6px);
+}
+.docs{
+  display:grid; gap:.8rem;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  margin-top:1.6rem;
+}
+.docs a{
+  display:block; text-decoration:none; color:inherit;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1rem 1.15rem;
+  transition:border-color .3s, transform .3s, box-shadow .3s;
+}
+.docs a:hover{
+  border-color:rgba(255,61,146,.45);
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
+.docs .k{
+  display:block; font-size:.6rem; font-weight:800; letter-spacing:.2em;
+  color:var(--pink); margin-bottom:.35rem;
+}
+.docs b{display:block; font-size:.93rem; font-weight:700}
+.docs span:last-child{font-size:.78rem; color:var(--ink-soft)}
 
-    .join-us p {
-      margin-bottom: 1.5rem;
-      color: var(--text);
-    }
+/* ---- lightbox (same part as doc.css; index.html does not load that file) ---- */
+#lightbox{
+  position:fixed; inset:0; z-index:90;
+  display:none; place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(18,10,26,.92);
+  backdrop-filter:blur(6px);
+}
+#lightbox.on{display:grid}
+#lightbox img{
+  max-width:100%; max-height:88svh;
+  width:auto; height:auto;
+  border-radius:10px;
+  box-shadow:0 30px 90px -30px #000;
+}
+#lightbox .close{
+  position:absolute; top:1rem; right:1rem;
+  width:2.6rem; height:2.6rem; border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08); color:#fff;
+  font-size:1.1rem; cursor:pointer; line-height:1;
+}
+#lightbox .close:hover{background:var(--pink); border-color:var(--pink)}
+#lightbox .cap{
+  position:absolute; left:0; right:0; bottom:1.1rem;
+  text-align:center; color:#e8dcf0;
+  font-size:.8rem; letter-spacing:.04em;
+}
 
-    .join-button {
-      display: inline-block;
-      padding: 0.8rem 2rem;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
-      color: #fff;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-    }
-
-    .join-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 30px rgba(0, 212, 255, 0.5);
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero .tagline {
-        font-size: 1.1rem;
-      }
-
-      .container {
-        padding: 2rem 1rem;
-      }
-
-      section {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+/* loader */
+#loader{
+  position:fixed; inset:0; z-index:100;
+  display:grid; place-items:center;
+  background:#e9e1ee;
+  transition:opacity .7s ease, visibility .7s;
+}
+#loader.done{opacity:0; visibility:hidden}
+#loader .bar{
+  width:min(220px,50vw); height:2px;
+  background:rgba(120,90,140,.2);
+  border-radius:2px; overflow:hidden;
+}
+#loader .bar i{
+  display:block; height:100%; width:0%;
+  background:linear-gradient(90deg,var(--lav),var(--pink));
+  transition:width .3s ease;
+}
+#loader .txt{
+  position:absolute; bottom:calc(50% - 46px); left:0; right:0;
+  text-align:center;
+  font-size:.66rem; font-weight:800; letter-spacing:.28em;
+  color:var(--ink-soft);
+}
+</style>
 </head>
 <body>
-  <div id="canvas-container"></div>
 
-  <div class="content">
-    <header class="hero">
-      <h1>technologies.moe</h1>
-      <p class="tagline">ブラックボックス化しがちな技術を、ちゃんと理解できる形で残す</p>
-      <div class="scroll-indicator">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-        </svg>
+<div id="loader">
+  <div class="bar"><i id="loadbar"></i></div>
+  <div class="txt">SETTING UP THE ROOM</div>
+</div>
+
+<!-- ============ DIORAMA ============ -->
+<div class="diorama" id="diorama">
+  <div class="camera" id="camera"></div>
+
+  <div class="sunbeam"></div>
+  <canvas id="dust"></canvas>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-brand">technologies.moe</a>
+  <div class="nav-links">
+    <a href="#c109">C109</a>
+    <a href="#about">About</a>
+    <a href="#works">Works</a>
+    <a href="#alibi">Alibi</a>
+    <a href="alibi.html">設定資料</a>
+    <a href="#members">Members</a>
+    <a href="#join" class="nav-cta">Join Us</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="badge"><i></i> <b>C109</b> &nbsp;COMIKET 109 / 2026 WINTER</div>
+  <h1>technologies<span class="dot">.</span>moe</h1>
+  <p class="tagline">ブラックボックス化しがちな技術を、<br>ちゃんと理解できる形で残す。</p>
+  <div class="hero-actions">
+    <a href="#c109" class="btn btn-primary">C109 の新刊を見る</a>
+    <a href="#about" class="btn btn-ghost">サークルについて</a>
+  </div>
+  <div class="scroll-hint"><span>SCROLL</span><span class="rail"></span></div>
+</header>
+
+<!-- ============ CONTENT ============ -->
+<div class="content">
+  <div class="wrap">
+
+    <section class="sect rv" id="c109">
+      <div class="sect-head">
+        <span class="en">Next</span>
+        <h2>コミックマーケット 109</h2>
       </div>
-    </header>
-
-    <main class="container">
-      <section id="about" aria-labelledby="about-heading">
-        <h2 id="about-heading">About</h2>
-        <p>
-          AI・GPU・LLM・分散システムなど、<span class="emphasis">「なぜそうなっているのか」「どこが限界で、どこに余地があるのか」</span>を重視した技術同人誌を制作しています。
-        </p>
-        <p>
-          流行り言葉や魔法のような説明は控えめ。代わりに、設計思想・トレードオフ・実測結果をきちんと書きます。
-        </p>
-      </section>
-
-      <section id="themes" aria-labelledby="themes-heading">
-        <h2 id="themes-heading">Themes</h2>
-        <div class="themes-grid">
-          <div class="theme-card">
-            <p>LLM / マルチエージェント設計<br><small style="color: var(--text-muted)">MAS, Orchestration</small></p>
-          </div>
-          <div class="theme-card">
-            <p>GPUアーキテクチャ・高速化<br><small style="color: var(--text-muted)">CUDA, FlashAttention</small></p>
-          </div>
-          <div class="theme-card">
-            <p>AI安全性・評価・実験設計</p>
-          </div>
-          <div class="theme-card">
-            <p>「AIは魔法ではない」系の分解解説</p>
-          </div>
+      <div class="release">
+        <div class="release-art cover">
+          <img src="assets/c109/cover.webp" width="1054" height="1492" loading="lazy"
+               alt="新刊『AI時代、だるいけど生き残る。』表紙">
         </div>
-      </section>
-
-      <section id="stance" aria-labelledby="stance-heading">
-        <h2 id="stance-heading">Stance</h2>
-        <div class="stance">
-          <div class="stance-item">
-            <p>実装と理論の両立</p>
-          </div>
-          <div class="stance-item">
-            <p>「動いた」だけで終わらせない</p>
-          </div>
-          <div class="stance-item">
-            <p>未来の自分が読み返しても耐える資料作り</p>
-          </div>
+        <div class="release-meta">
+          <span class="release-tag">NEW RELEASE</span>
+          <p class="release-sub">Alibiちゃんの、がんばりすぎないAI生存戦略</p>
+          <h3>AI時代、だるいけど生き残る。</h3>
+          <p>最先端を追わなくても、ちゃんと強くなれる現実的な考え方。<br>
+             難しい技術はわからなくてOK。現場で使える考え方だけ、ゆるく解説します。</p>
+          <ul class="toc">
+            <li>AI時代に焦らなくていい理由</li>
+            <li>AIに仕事を奪われない人の共通点</li>
+            <li>AI活用のリアルな考え方</li>
+            <li>情報中毒にならない方法</li>
+            <li>AIツールより大事なスキル</li>
+            <li>明日から使える実践Tips</li>
+            <li class="extra">Alibiちゃんのぐずぐずコラムも収録</li>
+          </ul>
+          <ul class="spec">
+            <li><b>EVENT</b><span>コミックマーケット109</span></li>
+            <li><b>DATE</b><span class="tbd">2026 冬 — 詳細は決定次第</span></li>
+            <li><b>SPACE</b><span class="tbd">申込中 / 配置発表待ち</span></li>
+            <li><b>SPEC</b><span class="tbd">判型・ページ数・頒布価格は未定</span></li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="for" aria-labelledby="for-heading">
-        <h2 id="for-heading">For</h2>
-        <ul>
-          <li>仕組みを知りたいエンジニア</li>
-          <li>論文と実装のギャップに悩んでいる人</li>
-          <li>「結局それ、どこがボトルネック？」が気になる人</li>
+    <section class="sect rv" id="about">
+      <div class="sect-head">
+        <span class="en">About</span>
+        <h2>何を書いているか</h2>
+      </div>
+      <div class="two-col">
+        <div>
+          <p class="lead">AI・GPU・LLM・分散システムなど、<span class="em">「なぜそうなっているのか」「どこが限界で、どこに余地があるのか」</span>を重視した技術同人誌を制作しています。</p>
+        </div>
+        <div>
+          <p>流行り言葉や魔法のような説明は控えめ。代わりに、設計思想・トレードオフ・実測結果をきちんと書きます。手を動かして確かめたことだけを、確かめた粒度で書く。それだけです。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sect rv" id="works">
+      <div class="sect-head">
+        <span class="en">Works</span>
+        <h2>既刊</h2>
+      </div>
+      <div class="release" style="grid-template-columns:1fr">
+        <div class="release-meta">
+          <span class="release-tag">PAST WORKS</span>
+          <h3>既刊情報は準備中</h3>
+          <p>これまでの頒布物をここに並べます。タイトル・発行イベント・頒布状況が固まりしだい追記します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sect rv">
+      <div class="sect-head">
+        <span class="en">Themes</span>
+        <h2>扱っているテーマ</h2>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <span class="n">01</span>
+          <h3>LLM / マルチエージェント設計</h3>
+          <p>MAS, Orchestration, コンテキスト設計</p>
+        </div>
+        <div class="card">
+          <span class="n">02</span>
+          <h3>GPUアーキテクチャ・高速化</h3>
+          <p>CUDA, FlashAttention, メモリ帯域</p>
+        </div>
+        <div class="card">
+          <span class="n">03</span>
+          <h3>AI安全性・評価・実験設計</h3>
+          <p>ベンチマークの読み方と落とし穴</p>
+        </div>
+        <div class="card">
+          <span class="n">04</span>
+          <h3>「AIは魔法ではない」系の分解解説</h3>
+          <p>仕組みまで降りて説明する</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sect rv">
+      <div class="sect-head">
+        <span class="en">Stance</span>
+        <h2>スタンス</h2>
+      </div>
+      <div class="two-col">
+        <ul class="stance">
+          <li>実装と理論の両立</li>
+          <li>「動いた」だけで終わらせない</li>
+          <li>未来の自分が読み返しても耐える資料作り</li>
         </ul>
-      </section>
-
-      <section id="activities" aria-labelledby="activities-heading">
-        <h2 id="activities-heading">Activities</h2>
-        <div class="activities">
-          <span class="tag">技術書典</span>
-          <span class="tag">コミックマーケット</span>
-          <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="tag">GitHub</a>
+        <div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.8rem">こんな人へ</h3>
+          <ul class="bullets">
+            <li>仕組みを知りたいエンジニア</li>
+            <li>論文と実装のギャップに悩んでいる人</li>
+            <li>「結局それ、どこがボトルネック？」が気になる人</li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="members" aria-labelledby="members-heading">
-        <h2 id="members-heading">Members</h2>
-        <div class="members">
-          <div class="member-card">
-            <img src="https://github.com/m96-chan.png" alt="m96-chan" class="member-avatar">
-            <div class="member-info">
-              <h3>m96-chan</h3>
-              <div class="member-links">
-                <a href="https://github.com/m96-chan" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://m96-chan.dev" target="_blank" rel="noopener">Web</a>
-              </div>
+    <section class="sect rv" id="alibi">
+      <div class="sect-head">
+        <span class="en">Character</span>
+        <h2>Alibi</h2>
+      </div>
+      <div class="char-banner">
+        <img src="assets/banner/alibi-pointing.webp" width="1672" height="941" loading="lazy"
+             data-ripple data-ripple-origin="0.536,0.417"
+             data-kaibunsho="docs/creators-weird-message.txt"
+             data-grin="assets/banner/alibi-grin.webp"
+             alt="こちらを指差す Alibiちゃん">
+        <span class="tag">ALIBI</span>
+      </div>
+      <div class="two-col">
+        <div>
+          <p class="lead">サークル「技術萌」の看板キャラクター。新刊<span class="em">『AI時代、だるいけど生き残る。』</span>で読者を案内する役でもあります。</p>
+          <p>部屋のどこかにいるはずなので、探してみてください。話しかけると何か言います。</p>
+        </div>
+        <div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.8rem">性格の核</h3>
+          <ul class="bullets">
+            <li>無気力・省エネ・面倒くさがり</li>
+            <li>他人の目より自分の合理性</li>
+            <li>技術にだけ異常な集中力</li>
+            <li>技術に対してだけ「後退のネジ」がない</li>
+          </ul>
+          <p style="font-size:.82rem;margin-top:1rem">生活は省エネ、技術には後退のネジがない女。</p>
+        </div>
+      </div>
+
+      <div class="docs">
+        <a href="alibi.html">
+          <span class="k">01 / PROFILE</span>
+          <b>プロフィール</b>
+          <span>基本設定・性格・カラー</span>
+        </a>
+        <a href="alibi-design.html">
+          <span class="k">02 / DESIGN</span>
+          <b>キャラクターデザイン</b>
+          <span>外見・常用服・同一性保持</span>
+        </a>
+        <a href="alibi-mind.html">
+          <span class="k">03 / MIND</span>
+          <b>思考回路</b>
+          <span>価値観・技術者としての性質</span>
+        </a>
+        <a href="alibi-comic.html">
+          <span class="k">04 / COMIC</span>
+          <b>小ネタ漫画案</b>
+          <span>生活習慣・ギャグ・イラスト</span>
+        </a>
+        <a href="alibi-voice.html">
+          <span class="k">05 / VOICE</span>
+          <b>口調と声</b>
+          <span>セリフ・話速・声の方向性</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="sect rv" id="goods">
+      <div class="sect-head">
+        <span class="en">Activities</span>
+        <h2>活動</h2>
+      </div>
+      <div class="tags">
+        <span class="tag">コミックマーケット</span>
+        <span class="tag">技術書典</span>
+        <span class="tag">技術同人誌</span>
+        <span class="tag">ノベルティ / グッズ</span>
+        <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="tag">GitHub ↗</a>
+      </div>
+    </section>
+
+    <section class="sect rv" id="members">
+      <div class="sect-head">
+        <span class="en">Members</span>
+        <h2>メンバー</h2>
+      </div>
+      <div class="grid">
+        <div class="member">
+          <img src="https://github.com/m96-chan.png" alt="m96-chan" loading="lazy" width="60" height="60">
+          <div>
+            <h3>m96-chan</h3>
+            <div class="links">
+              <a href="https://github.com/m96-chan" target="_blank" rel="noopener">GitHub</a>
+              <a href="https://m96-chan.dev" target="_blank" rel="noopener">Web</a>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="join" class="join-us" aria-labelledby="join-heading">
-        <h2 id="join-heading">Join Us</h2>
-        <p>技術同人誌の執筆に興味がある方、一緒に活動しませんか？</p>
-        <a href="https://github.com/technologies-moe" target="_blank" class="join-button" rel="noopener">Contact via GitHub</a>
-      </section>
-    </main>
+    <section class="sect rv" id="join">
+      <div class="join-grid">
+        <div class="join">
+          <h2>Join Us</h2>
+          <p>技術同人誌の執筆・編集・デザインに興味がある方、一緒に活動しませんか。まずは気軽に声をかけてください。</p>
+          <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="btn btn-primary">Contact via GitHub</a>
+        </div>
+        <div class="call">
+          <div>
+            <h2>パロディ本、募集中！</h2>
+            <p class="sub">技術萌で本を出してみませんか？</p>
+            <p class="rule-note"><span>勝手に二次創作も大歓迎</span></p>
+            <ul>
+              <li>パロディ歓迎。うちを勝手にネタにして OK</li>
+              <li>18禁も歓迎</li>
+              <li>漫画 / イラスト / 小説 / ネタ本 歓迎</li>
+              <li>合同誌・個人誌どちらでも OK</li>
+              <li>技術推しじゃなくても OK</li>
+            </ul>
+            <p class="fine">Alibiちゃんや技術萌を、自由に料理して OK。好き勝手やってくれる人、待ってます。</p>
+          </div>
+          <button class="paper-btn" type="button" data-full="assets/alibi/recruit-poster.webp"
+                  data-cap="パロディ本募集中！ — 技術萌で本を出してみませんか？"
+                  data-alt="パロディ本募集中のポスター。パロディ歓迎・18禁も歓迎・漫画イラスト小説ネタ本歓迎・合同誌個人誌どちらでもOK・好き勝手やってくれる人求む。技術推しじゃなくてもOK、ネタにしてくれる人待ってます。">
+            <img src="assets/alibi/recruit-poster-thumb.webp" width="480" height="600" loading="lazy"
+                 class="paper" alt="「パロディ本募集中！」のポスターイラスト">
+          </button>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-      <p>&copy; technologies.moe</p>
-    </footer>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    // Three.js Background
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  <footer>
+    <p>&copy; technologies.moe</p>
+  </footer>
+</div>
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="拡大表示">
+  <button class="close" aria-label="閉じる">✕</button>
+  <img alt="">
+  <p class="cap"></p>
+</div>
+<script src="assets/lightbox.js"></script>
+<script src="assets/ripple.js"></script>
+<script src="assets/kaibunsho.js"></script>
+<script src="assets/night.js"></script>
+<script src="assets/diorama.js"></script>
+<script>
+(async () => {
+  'use strict';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.getElementById('diorama');
+  const loader = document.getElementById('loader');
+  const bar = document.getElementById('loadbar');
 
-    // Particles
-    const particleCount = 1500;
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-    const sizes = new Float32Array(particleCount);
+  let data;
+  try {
+    data = await (await fetch('assets/room/layers.json', { cache: 'no-cache' })).json();
+  } catch (e) {
+    loader.classList.add('done');            // never trap the visitor
+    console.error('layers.json could not be loaded', e);
+    return;
+  }
 
-    const color1 = new THREE.Color(0x00d4ff);
-    const color2 = new THREE.Color(0x7b2cbf);
+  const layers = Diorama.build(root, data);
 
-    for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 50;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+  const progress = Diorama.whenLoaded(root, () => {
+    document.getElementById('camera').classList.add('booted');
+    loader.classList.add('done');
+  });
+  root.querySelectorAll('.camera img').forEach(im => {
+    const up = () => { if (bar) bar.style.width =
+      Math.round(progress.count() / progress.total * 100) + '%'; };
+    im.addEventListener('load', up); im.addEventListener('error', up);
+    if (im.complete) up();
+  });
 
-      const mixRatio = Math.random();
-      const color = color1.clone().lerp(color2, mixRatio);
-      colors[i * 3] = color.r;
-      colors[i * 3 + 1] = color.g;
-      colors[i * 3 + 2] = color.b;
+  const nav = document.getElementById('nav');
+  Diorama.animate(root, layers, data, {
+    frozen: reduce,
+    onScroll: (y) => nav.classList.toggle('solid', y > innerHeight * .6)
+  });
 
-      sizes[i] = Math.random() * 2 + 0.5;
-    }
-
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-    const particleMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0 },
-        pixelRatio: { value: renderer.getPixelRatio() }
-      },
-      vertexShader: `
-        attribute float size;
-        attribute vec3 color;
-        varying vec3 vColor;
-        uniform float time;
-        uniform float pixelRatio;
-
-        void main() {
-          vColor = color;
-          vec3 pos = position;
-          pos.y += sin(time * 0.5 + position.x * 0.1) * 0.5;
-          pos.x += cos(time * 0.3 + position.z * 0.1) * 0.5;
-
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          gl_PointSize = size * pixelRatio * (300.0 / -mvPosition.z);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vColor;
-
-        void main() {
-          float dist = length(gl_PointCoord - vec2(0.5));
-          if (dist > 0.5) discard;
-
-          float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
-          gl_FragColor = vec4(vColor, alpha * 0.8);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
-
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particles);
-
-    // Lines connecting nearby particles
-    const linesMaterial = new THREE.LineBasicMaterial({
-      color: 0x00d4ff,
-      transparent: true,
-      opacity: 0.1
-    });
-
-    const linesGeometry = new THREE.BufferGeometry();
-    const linePositions = [];
-    const maxDistance = 5;
-
-    for (let i = 0; i < particleCount; i++) {
-      for (let j = i + 1; j < particleCount; j++) {
-        const dx = positions[i * 3] - positions[j * 3];
-        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
-        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (dist < maxDistance && linePositions.length < 10000 * 6) {
-          linePositions.push(
-            positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
-            positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
-          );
-        }
+  /* ---------- dust motes ---------- */
+  const cv = document.getElementById('dust');
+  if (cv && !reduce) {
+    const ctx = cv.getContext('2d');
+    let W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), motes = [];
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const build = () => {
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(Math.min(70, (W * H) / 26000));
+      motes = Array.from({ length: n }, () => ({
+        x: rand(0, W), y: rand(0, H),
+        r: rand(.7, 2.4), a: rand(.12, .5),
+        vy: rand(-.16, -.04), vx: rand(-.09, .09),
+        ph: rand(0, Math.PI * 2), sp: rand(.006, .018)
+      }));
+    };
+    build();
+    addEventListener('resize', build, { passive: true });
+    (function paint() {
+      ctx.clearRect(0, 0, W, H);
+      for (const m of motes) {
+        m.ph += m.sp;
+        m.y += m.vy;
+        m.x += m.vx + Math.sin(m.ph) * .22;
+        if (m.y < -10) { m.y = H + 10; m.x = rand(0, W); }
+        if (m.x < -10) m.x = W + 10;
+        if (m.x > W + 10) m.x = -10;
+        const tw = .55 + .45 * Math.sin(m.ph * 1.7);
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, 6.2832);
+        ctx.fillStyle = `rgba(255,252,240,${(m.a * tw).toFixed(3)})`;
+        ctx.fill();
       }
+      requestAnimationFrame(paint);
+    })();
+  }
+
+  /* ---------- hotspots ---------- */
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-goto]');
+    if (!btn) return;
+    const target = btn.dataset.goto;
+    // "action:name" runs something in place instead of navigating
+    if (target.startsWith('action:')) {
+      if (target === 'action:night' && window.Night) Night.open();
+      return;
     }
+    if (!target.startsWith('#')) { location.href = target; return; }
+    const t = document.querySelector(target);
+    if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
 
-    linesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-    const lines = new THREE.LineSegments(linesGeometry, linesMaterial);
-    scene.add(lines);
+  /* ---------- blink ----------
+     base -> half -> blink -> half -> base, at a randomised gap. Humans blink
+     every few seconds and often twice in a row, so a fixed interval reads as
+     a machine ticking. */
+  const cast = data.layers.find(l => l.blink);
+  const actor = cast && layers.find(r => r.def.id === cast.id && r.setFace);
+  if (actor && !reduce) {
+    // decode every sheet up front, otherwise the first blink stalls while the
+    // browser rasterises a bitmap it has never painted
+    await actor.ready();
+    const B = cast.blink;
+    const rand = (a, b) => a + Math.random() * (b - a);
+    let chain = [];
+    const clear = () => { chain.forEach(clearTimeout); chain = []; };
+    const at = (ms, fn) => chain.push(setTimeout(fn, ms));
 
-    camera.position.z = 30;
+    const once = (t0) => {
+      at(t0, () => actor.setFace('half'));
+      at(t0 + B.lead, () => actor.setFace('blink'));
+      at(t0 + B.lead + B.hold, () => actor.setFace('half'));
+      at(t0 + B.lead + B.hold + B.tail, () => actor.setFace('base'));
+      return t0 + B.lead + B.hold + B.tail;
+    };
 
-    // Mouse interaction
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    const schedule = () => {
+      clear();
+      const gap = rand(B.minGap, B.maxGap);
+      let end = once(gap);
+      if (Math.random() < B.doubleChance) end = once(end + 130);
+      at(end + 40, schedule);
+    };
+    schedule();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { clear(); actor.setFace('base'); }
+      else schedule();
     });
+  }
 
-    // Animation
-    let time = 0;
-    function animate() {
-      requestAnimationFrame(animate);
-      time += 0.01;
+  /* ---------- speech bubble ---------- */
+  const bubble = root.querySelector('.speech-body');
+  const speaker = data.layers.find(l => l.speech) || {};
+  const lines = speaker.speech?.lines || [];
+  // a line may be "text" or {t, face}; faces maps a name to an alternate sheet,
+  // so expression variants drop in without touching this code
+  const faces = speaker.faces || {};
+  const faceImg = layers.find(l => l.def.id === speaker.id && l.img);
+  const textOf = (l) => (typeof l === 'string' ? l : l.t);
+  if (bubble && lines.length) {
+    let i = 0, timer = 0;
+    const show = (n) => {
+      bubble.classList.add('swap');
+      setTimeout(() => {
+        i = (n + lines.length) % lines.length;
+        const line = lines[i];
+        bubble.textContent = textOf(line);
+        const face = typeof line === 'object' && line.face;
+        if (face && faces[face] && faceImg) faceImg.img.src = 'assets/room/' + faces[face];
+        bubble.classList.remove('swap');
+      }, reduce ? 0 : 280);
+    };
+    const queue = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { show(i + 1); queue(); }, 7000);
+    };
+    bubble.textContent = textOf(lines[0]);
+    bubble.addEventListener('click', () => { show(i + 1); queue(); });
+    if (!reduce) queue();
+  }
 
-      particleMaterial.uniforms.time.value = time;
-
-      particles.rotation.y = time * 0.05 + mouseX * 0.3;
-      particles.rotation.x = mouseY * 0.2;
-      lines.rotation.y = time * 0.05 + mouseX * 0.3;
-      lines.rotation.x = mouseY * 0.2;
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    // Resize handler
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+  /* ---------- reveal ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
     });
-
-    // Scroll parallax
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      camera.position.z = 30 + scrollY * 0.02;
-    });
-  </script>
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+})();
+</script>
 </body>
 </html>

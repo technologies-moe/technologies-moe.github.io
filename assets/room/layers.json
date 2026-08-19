@@ -1,0 +1,183 @@
+{
+  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth. A layer may carry `variants` mapping a time-of-day (morning/evening/night) to an alternate sheet; 06-12/12-18/18-22/22-06 JST, ?room= forces one. `when` limits a layer to one room state: 'sleep' is 02:00-08:00 JST, 'awake' is the rest of the day; ?sleep=1 / ?sleep=0 forces either for testing.",
+  "perspective": 2000,
+  "amp": {
+    "x": 58,
+    "y": 30
+  },
+  "scroll": {
+    "zoom": 190,
+    "lift": -70
+  },
+  "layers": [
+    {
+      "id": "room",
+      "file": "01-room.webp",
+      "variants": {
+        "morning": "01-room-morning.webp",
+        "evening": "01-room-evening.webp",
+        "night": "01-room-night.webp"
+      },
+      "par": 0.25,
+      "sx": 1,
+      "sy": 1,
+      "tx": 0,
+      "ty": 0,
+      "pins": [
+        {
+          "x": 32,
+          "y": 27,
+          "label": "WORKS",
+          "goto": "#works",
+          "aria": "既刊・Works へ"
+        },
+        {
+          "x": 69,
+          "y": 22,
+          "label": "MEMBER 募集",
+          "goto": "#join",
+          "aria": "メンバー募集へ"
+        },
+        {
+          "x": 89.5,
+          "y": 28,
+          "label": "ALIBI",
+          "goto": "#alibi",
+          "aria": "Alibi 紹介へ"
+        },
+        {
+          "x": 80,
+          "y": 27,
+          "label": "？",
+          "goto": "secret.html",
+          "aria": "",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "id": "desk",
+      "file": "07-desk.webp",
+      "par": 0.7,
+      "sx": 0.55,
+      "sy": 0.6494,
+      "tx": -24.7,
+      "ty": 4.57,
+      "shade": {
+        "x": 37.1,
+        "y": 87.0,
+        "w": 4.5,
+        "h": 1.6
+      },
+      "pins": [
+        {
+          "x": 13,
+          "y": 38,
+          "label": "WHAT WE WRITE",
+          "goto": "#about",
+          "aria": "技術の話へ"
+        },
+        {
+          "x": 14.95,
+          "y": 63.55,
+          "label": "？",
+          "goto": "action:night",
+          "aria": "",
+          "hidden": true,
+          "when": "sleep",
+          "beacon": true
+        }
+      ]
+    },
+    {
+      "id": "chair",
+      "file": "08-chair.webp",
+      "par": 0.88,
+      "sx": 0.92,
+      "sy": 0.92,
+      "tx": 5,
+      "ty": 35
+    },
+    {
+      "id": "sleep-board",
+      "file": "11-sleep-board.webp",
+      "when": "sleep",
+      "par": 0.95,
+      "sx": 0.17,
+      "sy": 0.215,
+      "tx": 3.6,
+      "ty": 38.9,
+      "shade": {
+        "x": 54,
+        "y": 92.8,
+        "w": 15,
+        "h": 3
+      }
+    },
+    {
+      "id": "character",
+      "file": "09-character.webp",
+      "par": 1,
+      "sx": 0.94,
+      "sy": 0.94,
+      "tx": -0.9,
+      "ty": 2.9,
+      "speech": {
+        "x": 66,
+        "y": 11,
+        "lines": [
+          "……あ、来てくれたんだ。",
+          "新刊、まだ書いてる途中。",
+          "うちは後退のネジ、外してるからよー。",
+          "GPU、今日もあついね。",
+          "全部追うの、無理だよ？",
+          "必要になったら、そこまで潜ればいい。",
+          "そこの水着、押しても何も出ないよ。……たぶん。",
+          "水着だから恥ずかしくないもん。",
+          "同じ水着4着でローテしてるの。同じじゃない、別個体。",
+          "無駄こそ至福。……まあ明日には100%だけど。",
+          "エラー出た？……お、喧嘩売ってる？",
+          "失敗したPoC？答えが一個減っただけじゃん。",
+          "「動いた」で終わらせないの、けっこう大事だと思う。",
+          "他人の評価って、出世街道走るとき以外いる？",
+          "NPUなんて量子化GEMM速いだけじゃん。名前だけ立派。",
+          "Socket370、良かったよね……ピンの数だけゾクゾクする。",
+          "タオルって工程多くない？風呂上がりはドライヤー直体。",
+          "ごめんPC、昨日ちょっと負荷かけすぎた……。",
+          "別に？",
+          "C109、受かるといいな。"
+        ]
+      },
+      "faces": {
+        "base": "09-character.webp",
+        "half": "09-half-eyes.webp",
+        "blink": "09-blink-eyes.webp"
+      },
+      "blink": {
+        "minGap": 2600,
+        "maxGap": 7200,
+        "lead": 45,
+        "hold": 95,
+        "tail": 45,
+        "doubleChance": 0.28
+      },
+      "when": "awake"
+    },
+    {
+      "id": "books",
+      "file": "10-books.webp",
+      "par": 1.55,
+      "sx": 0.53,
+      "sy": 0.53,
+      "tx": -25.6,
+      "ty": 27.6,
+      "pin": {
+        "x": 21,
+        "y": 72,
+        "label": "C109 NEW RELEASE",
+        "goto": "#c109",
+        "aria": "C109 新刊へ"
+      }
+    }
+  ]
+}
