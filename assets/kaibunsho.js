@@ -18,15 +18,35 @@
   'use strict';
 
   const TAPS = 5;          // how many
-  const WINDOW = 1500;     // ms allowed between taps
+  const WINDOW = 2500;     // ms allowed between taps — snug enough to stay an
+                           // intentional rhythm, loose enough for a trackpad
   const SPEED = 85;        // px/s the column climbs
 
   const CSS = `
   .kai-zone{
-    position:absolute; left:62%; top:22%; width:14%; height:15%;
+    /* the black tank-top bust, measured on a 2% grid: x 62-80%, y 42-58%.
+       The first fit was one face too high — a 5% grid made the head look
+       half its real size, and the zone landed on her mouth. */
+    position:absolute; left:62%; top:42%; width:18%; height:16%;
     background:transparent; border:0; padding:0; margin:0;
     cursor:inherit;                         /* no hint — it has to be found */
   }
+  /* a counted tap answers with a small heart, so once the spot is found the
+     player can tell "keep going" from "missed" — before that, nothing shows */
+  .kai-pop{
+    position:absolute; z-index:5;
+    font-size:clamp(13px,1.3vw,19px);
+    color:#ff3d92;
+    pointer-events:none; user-select:none;
+    transform:translate(-50%,-50%);
+    animation:kaiPop .8s ease-out forwards;
+  }
+  @keyframes kaiPop{
+    0%  {opacity:0; transform:translate(-50%,-30%) scale(.6)}
+    25% {opacity:1}
+    100%{opacity:0; transform:translate(-50%,-160%) scale(1.15)}
+  }
+  @media (prefers-reduced-motion:reduce){.kai-pop{animation:none;opacity:0}}
   .kai-grin{
     position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover;
@@ -172,12 +192,24 @@
       if (raf) { cancelAnimationFrame(raf); raf = 0; }
     };
 
+    const pop = (e) => {
+      const r = host.getBoundingClientRect();
+      const p = document.createElement('span');
+      p.className = 'kai-pop';
+      p.textContent = '♡';
+      p.style.left = ((e.clientX - r.left) / r.width * 100) + '%';
+      p.style.top = ((e.clientY - r.top) / r.height * 100) + '%';
+      host.appendChild(p);
+      setTimeout(() => p.remove(), 900);
+    };
+
     zone.addEventListener('pointerdown', (e) => {
       e.stopPropagation();             // this tap is hers, not the ripple's
       if (active) { deactivate(); return; }
       const now = performance.now();
       taps = (now - lastTap <= WINDOW) ? taps + 1 : 1;
       lastTap = now;
+      pop(e);
       if (taps >= TAPS) activate();
     });
 
