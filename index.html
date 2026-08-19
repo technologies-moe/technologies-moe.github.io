@@ -116,6 +116,18 @@ body{
   pointer-events:none;
 }
 
+/* ---- time-of-day grade ----
+   Only the room base sheet is repainted per time of day; the props and the
+   character keep their midday lighting, so they get a light CSS grade to sit
+   in the scene instead of floating on top of it. The pins and speech bubble
+   are UI, not scenery — they stay ungraded and legible. */
+.diorama.t-morning .layer:not([data-id="room"]) img{filter:brightness(1.03)}
+.diorama.t-evening .layer:not([data-id="room"]) img{filter:sepia(.16) saturate(1.12) brightness(.95)}
+.diorama.t-night   .layer:not([data-id="room"]) img{filter:brightness(.62) saturate(.8) contrast(1.05)}
+/* the window beam is sunlight; dusk halves it and night puts it out */
+.diorama.t-evening .sunbeam{opacity:.45}
+.diorama.t-night .sunbeam{display:none}
+
 /* window light breathing */
 .sunbeam{
   position:absolute; inset:0;
@@ -665,7 +677,18 @@ a.tag:hover{border-color:var(--pink); color:var(--pink); transform:translateY(-2
   box-shadow:0 2px 4px rgba(120,40,80,.45);
 }
 .call h2{font-size:clamp(1.2rem,2.6vw,1.6rem); font-weight:800; margin-bottom:.2rem}
-.call .sub{font-size:.8rem; font-weight:700; letter-spacing:.14em; color:var(--pink); margin-bottom:1rem}
+.call .sub{font-size:.8rem; font-weight:700; letter-spacing:.14em; color:var(--pink); margin-bottom:.7rem}
+.call .rule-note{
+  display:flex; align-items:center; gap:.7rem;
+  font-size:.82rem; font-weight:800; letter-spacing:.08em;
+  color:var(--ink);
+  margin-bottom:1.1rem;
+}
+.call .rule-note::before,.call .rule-note::after{
+  content:""; flex:1; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,61,146,.55));
+}
+.call .rule-note::after{background:linear-gradient(90deg, rgba(255,61,146,.55), transparent)}
 .call ul{list-style:none; display:grid; gap:.5rem}
 .call li{
   font-size:.9rem; color:var(--ink-soft);
@@ -1133,6 +1156,7 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
           <div>
             <h2>パロディ本、募集中！</h2>
             <p class="sub">技術萌で本を出してみませんか？</p>
+            <p class="rule-note"><span>勝手に二次創作も大歓迎</span></p>
             <ul>
               <li>パロディ歓迎。うちを勝手にネタにして OK</li>
               <li>18禁も歓迎</li>

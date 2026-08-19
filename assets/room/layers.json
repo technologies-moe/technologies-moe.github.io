@@ -1,5 +1,5 @@
 {
-  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth. `when` limits a layer to one room state: 'sleep' is 02:00-08:00 JST, 'awake' is the rest of the day; ?sleep=1 / ?sleep=0 forces either for testing.",
+  "note": "Layer placement for the parallax diorama. Edit with /tune.html, then paste the exported JSON back here. The room sheet carries every fixed fitting so wall-mounted props can never drift off the wall; only free-standing furniture and the character get their own depth. A layer may carry `variants` mapping a time-of-day (morning/evening/night) to an alternate sheet; 06-12/12-18/18-22/22-06 JST, ?room= forces one. `when` limits a layer to one room state: 'sleep' is 02:00-08:00 JST, 'awake' is the rest of the day; ?sleep=1 / ?sleep=0 forces either for testing.",
   "perspective": 2000,
   "amp": {
     "x": 58,
@@ -13,6 +13,11 @@
     {
       "id": "room",
       "file": "01-room.webp",
+      "variants": {
+        "morning": "01-room-morning.webp",
+        "evening": "01-room-evening.webp",
+        "night": "01-room-night.webp"
+      },
       "par": 0.25,
       "sx": 1,
       "sy": 1,

@@ -32,11 +32,31 @@ window.Diorama = (function () {
     return (h >= 2 && h < 8) ? 'sleep' : 'awake';
   }
 
+  /* Time of day is a separate axis from sleep: it picks which lighting sheet
+     the room base uses (a layer lists them under `variants`), while sleep
+     decides who is in the chair. 06-12 morning, 12-18 default, 18-22 evening,
+     22-06 night — the spec named 12-16 and 22-28, so the 16-18 and 04-06 gaps
+     extend their neighbours. `?room=morning|default|evening|night` forces one. */
+  function roomVariant(search, now) {
+    const q = new URLSearchParams(search != null ? search : location.search).get('room');
+    if (['morning', 'default', 'evening', 'night'].includes(q)) return q;
+    const h = jstHour(now);
+    if (h >= 6 && h < 12) return 'morning';
+    if (h >= 12 && h < 18) return 'default';
+    if (h >= 18 && h < 22) return 'evening';
+    return 'night';
+  }
+
   function build(root, data, state) {
     const camera = root.querySelector('.camera');
     camera.textContent = '';
     const made = [];
     const now = state || mode();
+    // the tuner passes 'all' and gets the default lighting — placement work
+    // should not depend on what time it happens at
+    const variant = now === 'all' ? 'default' : roomVariant();
+    root.classList.remove('t-morning', 't-default', 't-evening', 't-night');
+    root.classList.add('t-' + variant);
 
     // a layer with `when` only exists in that state; everything else is always on.
     // the tuner passes 'all' so both states can be placed whatever the clock says.
@@ -57,7 +77,8 @@ window.Diorama = (function () {
 
       // expression sheets are stacked and cross-faded on opacity; swapping .src
       // would flash while the new bitmap decodes, which ruins a 95ms blink
-      const sheets = L.faces || { base: L.file };
+      const file = (L.variants && L.variants[variant]) || L.file;
+      const sheets = L.faces || { base: file };
       const imgs = {};
       Object.entries(sheets).forEach(([name, file], k) => {
         const im = document.createElement('img');
@@ -266,5 +287,5 @@ window.Diorama = (function () {
     return { count: () => n, total: imgs.length };
   }
 
-  return { build, animate, apply, place, whenLoaded, zOf, Z_SPREAD, mode, jstHour };
+  return { build, animate, apply, place, whenLoaded, zOf, Z_SPREAD, mode, jstHour, roomVariant };
 })();
