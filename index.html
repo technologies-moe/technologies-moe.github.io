@@ -638,6 +638,65 @@ a.tag:hover{border-color:var(--pink); color:var(--pink); transform:translateY(-2
 .join h2{font-size:clamp(1.4rem,3vw,1.9rem); font-weight:800; margin-bottom:.6rem}
 .join p{max-width:44ch; margin:0 auto 1.8rem}
 
+/* the creator call rides next to Join Us as the paper on the corkboard */
+.join-grid{
+  display:grid; gap:1.2rem;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  align-items:stretch;
+}
+.call{
+  position:relative;
+  background:linear-gradient(160deg,#fff 0%,#fff8f0 100%);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:clamp(1.8rem,4vw,2.6rem);
+  box-shadow:var(--shadow);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:1.4rem;
+  align-items:center;
+}
+.call::before{ /* the drawing pin */
+  content:"";
+  position:absolute; top:14px; left:50%;
+  width:11px; height:11px; border-radius:50%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle at 35% 30%, #ff8ec0, var(--pink) 65%);
+  box-shadow:0 2px 4px rgba(120,40,80,.45);
+}
+.call h2{font-size:clamp(1.2rem,2.6vw,1.6rem); font-weight:800; margin-bottom:.2rem}
+.call .sub{font-size:.8rem; font-weight:700; letter-spacing:.14em; color:var(--pink); margin-bottom:1rem}
+.call ul{list-style:none; display:grid; gap:.5rem}
+.call li{
+  font-size:.9rem; color:var(--ink-soft);
+  padding-left:1.4rem; position:relative;
+}
+.call li::before{
+  content:"✓"; position:absolute; left:0;
+  color:var(--mint); font-weight:800;
+}
+.call .paper-btn{
+  border:0; padding:0; background:none; cursor:zoom-in;
+  font:inherit;
+}
+.call .paper{
+  display:block;
+  width:clamp(130px,15vw,210px);
+  height:auto;   /* the height="600" attribute otherwise survives the CSS width
+                    override and stretches the poster vertically */
+  border-radius:10px;
+  transform:rotate(2.5deg);
+  box-shadow:0 12px 26px -12px rgba(80,40,100,.5);
+  border:1px solid rgba(120,90,140,.25);
+  transition:transform .3s;
+}
+.call .paper-btn:hover .paper,.call .paper-btn:focus-visible .paper{transform:rotate(1deg) scale(1.04)}
+.call .fine{font-size:.74rem; color:var(--ink-soft); margin-top:1.1rem}
+@media (max-width:560px){
+  .call{grid-template-columns:1fr}
+  .call .paper{justify-self:center}
+}
+
 footer{
   text-align:center;
   padding:3rem 1.5rem 4rem;
@@ -755,6 +814,35 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
 }
 .docs b{display:block; font-size:.93rem; font-weight:700}
 .docs span:last-child{font-size:.78rem; color:var(--ink-soft)}
+
+/* ---- lightbox (same part as doc.css; index.html does not load that file) ---- */
+#lightbox{
+  position:fixed; inset:0; z-index:90;
+  display:none; place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(18,10,26,.92);
+  backdrop-filter:blur(6px);
+}
+#lightbox.on{display:grid}
+#lightbox img{
+  max-width:100%; max-height:88svh;
+  width:auto; height:auto;
+  border-radius:10px;
+  box-shadow:0 30px 90px -30px #000;
+}
+#lightbox .close{
+  position:absolute; top:1rem; right:1rem;
+  width:2.6rem; height:2.6rem; border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08); color:#fff;
+  font-size:1.1rem; cursor:pointer; line-height:1;
+}
+#lightbox .close:hover{background:var(--pink); border-color:var(--pink)}
+#lightbox .cap{
+  position:absolute; left:0; right:0; bottom:1.1rem;
+  text-align:center; color:#e8dcf0;
+  font-size:.8rem; letter-spacing:.04em;
+}
 
 /* loader */
 #loader{
@@ -1035,10 +1123,32 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
     </section>
 
     <section class="sect rv" id="join">
-      <div class="join">
-        <h2>Join Us</h2>
-        <p>技術同人誌の執筆・編集・デザインに興味がある方、一緒に活動しませんか。まずは気軽に声をかけてください。</p>
-        <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="btn btn-primary">Contact via GitHub</a>
+      <div class="join-grid">
+        <div class="join">
+          <h2>Join Us</h2>
+          <p>技術同人誌の執筆・編集・デザインに興味がある方、一緒に活動しませんか。まずは気軽に声をかけてください。</p>
+          <a href="https://github.com/technologies-moe" target="_blank" rel="noopener" class="btn btn-primary">Contact via GitHub</a>
+        </div>
+        <div class="call">
+          <div>
+            <h2>パロディ本、募集中！</h2>
+            <p class="sub">技術萌で本を出してみませんか？</p>
+            <ul>
+              <li>パロディ歓迎。うちを勝手にネタにして OK</li>
+              <li>18禁も歓迎</li>
+              <li>漫画 / イラスト / 小説 / ネタ本 歓迎</li>
+              <li>合同誌・個人誌どちらでも OK</li>
+              <li>技術推しじゃなくても OK</li>
+            </ul>
+            <p class="fine">Alibiちゃんや技術萌を、自由に料理して OK。好き勝手やってくれる人、待ってます。</p>
+          </div>
+          <button class="paper-btn" type="button" data-full="assets/alibi/recruit-poster.webp"
+                  data-cap="パロディ本募集中！ — 技術萌で本を出してみませんか？"
+                  data-alt="パロディ本募集中のポスター。パロディ歓迎・18禁も歓迎・漫画イラスト小説ネタ本歓迎・合同誌個人誌どちらでもOK・好き勝手やってくれる人求む。技術推しじゃなくてもOK、ネタにしてくれる人待ってます。">
+            <img src="assets/alibi/recruit-poster-thumb.webp" width="480" height="600" loading="lazy"
+                 class="paper" alt="「パロディ本募集中！」のポスターイラスト">
+          </button>
+        </div>
       </div>
     </section>
 
@@ -1049,6 +1159,12 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
   </footer>
 </div>
 
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="拡大表示">
+  <button class="close" aria-label="閉じる">✕</button>
+  <img alt="">
+  <p class="cap"></p>
+</div>
+<script src="assets/lightbox.js"></script>
 <script src="assets/ripple.js"></script>
 <script src="assets/kaibunsho.js"></script>
 <script src="assets/night.js"></script>
