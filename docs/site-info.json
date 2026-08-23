@@ -1,0 +1,114 @@
+{
+  "_about": "サークル「技術萌」の情報の正本。index.html はこのJSONから描画されているわけではないので、サイトを更新したらここも更新すること（自動化は将来の別ISSUE）。alibi-ai の site_info ツールがこれを fetch して、Alibiちゃんが新刊やイベントを記憶で答えないようにするために使う。",
+  "_convention": "null = まだ決まっていない / 空配列 = 準備中。空文字やダミーで埋めないこと。「まだ分からない」と正確に答えられることがこのファイルの目的で、埋めた瞬間にハルシネーションの材料になる。",
+  "_url": "https://www.technologies.moe/docs/site-info.json",
+  "updated": "2026-08-23",
+
+  "circle": {
+    "name": "技術萌",
+    "site": "https://www.technologies.moe/",
+    "github": "https://github.com/technologies-moe",
+    "what": "AI・GPU・LLM・分散システムなど、「なぜそうなっているのか」「どこが限界で、どこに余地があるのか」を重視した技術同人誌を制作しているサークル。",
+    "stance": [
+      "実装と理論の両立",
+      "「動いた」だけで終わらせない",
+      "未来の自分が読み返しても耐える資料作り"
+    ],
+    "themes": [
+      "LLM / マルチエージェント設計",
+      "GPUアーキテクチャ・高速化",
+      "AI安全性・評価・実験設計",
+      "「AIは魔法ではない」系の分解解説"
+    ],
+    "activities": ["コミックマーケット", "技術書典", "技術同人誌", "ノベルティ / グッズ"]
+  },
+
+  "next_event": {
+    "name": "コミックマーケット109",
+    "date": "2026年冬",
+    "date_confirmed": false,
+    "space": null,
+    "status": "applied"
+  },
+
+  "new_release": {
+    "title": "AI時代、だるいけど生き残る。",
+    "subtitle": "Alibiちゃんの、がんばりすぎないAI生存戦略",
+    "summary": "最先端を追わなくても、ちゃんと強くなれる現実的な考え方。難しい技術はわからなくてOK。現場で使える考え方だけをゆるく解説する本。",
+    "structure": [
+      {
+        "part": "PART 01",
+        "title": "AIを使う人",
+        "audience": "非エンジニア向け",
+        "note": null
+      },
+      {
+        "part": "PART 02",
+        "title": "AIを組み込む人",
+        "audience": "AI活用エンジニア向け",
+        "note": null
+      },
+      {
+        "part": "PART 03",
+        "title": "AIをつくる人",
+        "audience": "AIエンジニア向け",
+        "note": "上級編は論文形式"
+      }
+    ],
+    "intro": "PART 00 に Alibiちゃんの自己紹介と導入漫画",
+    "topics": [
+      "AI時代に焦らなくていい理由",
+      "AIに仕事を奪われない人の共通点",
+      "AI活用のリアルな考え方",
+      "情報中毒にならない方法",
+      "AIツールより大事なスキル",
+      "明日から使える実践Tips"
+    ],
+    "extras": ["Alibiちゃんのぐずぐずコラム"],
+    "event": "コミックマーケット109",
+    "cover": "https://www.technologies.moe/assets/c109/cover.webp",
+    "format": null,
+    "pages": null,
+    "price": null
+  },
+
+  "past_works": [],
+
+  "recruiting": {
+    "open": true,
+    "summary": "技術同人誌の執筆・編集・デザインに興味がある人を募集中。連絡は GitHub から。",
+    "contact": "https://github.com/technologies-moe",
+    "welcomes": ["パロディ", "18禁", "漫画", "イラスト", "小説", "ネタ本"],
+    "notes": [
+      "技術萌を勝手にネタにしてOK",
+      "合同誌・個人誌どちらでもOK",
+      "技術推しじゃなくてもOK"
+    ]
+  },
+
+  "members": [
+    {
+      "name": "m96-chan",
+      "github": "https://github.com/m96-chan",
+      "web": "https://m96-chan.dev"
+    }
+  ],
+
+  "character": {
+    "name": "Alibi",
+    "role": "サークル「技術萌」の看板キャラクター。新刊『AI時代、だるいけど生き残る。』で読者を案内する役。",
+    "core": [
+      "無気力・省エネ・面倒くさがり",
+      "他人の目より自分の合理性",
+      "技術にだけ異常な集中力",
+      "技術に対してだけ「後退のネジ」がない"
+    ],
+    "docs": [
+      "https://www.technologies.moe/alibi.html",
+      "https://www.technologies.moe/alibi-design.html",
+      "https://www.technologies.moe/alibi-mind.html",
+      "https://www.technologies.moe/alibi-comic.html",
+      "https://www.technologies.moe/alibi-voice.html"
+    ]
+  }
+}
