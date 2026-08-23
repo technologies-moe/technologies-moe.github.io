@@ -536,18 +536,32 @@ p{color:var(--ink-soft)}
   font-size:.82rem; font-weight:700; letter-spacing:.02em;
   color:var(--lav); margin-bottom:.3rem;
 }
-.toc{list-style:none; display:grid; gap:.42rem; margin:1.3rem 0 .2rem}
-.toc li{
-  position:relative; padding-left:1.6rem;
-  font-size:.9rem; color:var(--ink); font-weight:500;
+/* 新刊の三部構成。話題を並べるより「自分はどの章の読者か」が先に立つので、
+   目次リストではなく PART 単位のブロックにしてある */
+.parts{list-style:none; display:grid; gap:.5rem; margin:1.25rem 0 .9rem}
+.parts li{
+  display:grid; grid-template-columns:4.4rem 1fr;
+  align-items:baseline; gap:.75rem;
+  padding:.5rem .8rem;
+  border-left:3px solid var(--pink);
+  border-radius:0 10px 10px 0;
+  background:linear-gradient(90deg, rgba(255,61,146,.08), transparent 72%);
 }
-.toc li::before{
-  content:"✓";
-  position:absolute; left:0; top:-.05em;
-  color:var(--pink); font-weight:800; font-size:.86rem;
+.parts .k{
+  font-size:.66rem; font-weight:800; letter-spacing:.12em;
+  color:var(--pink);
 }
-.toc li.extra{color:var(--ink-soft); font-weight:600}
-.toc li.extra::before{content:"＋"}
+.parts b{font-size:.95rem; font-weight:800; color:var(--ink)}
+.parts .who{
+  display:block;
+  font-size:.76rem; font-weight:600; color:var(--ink-soft);
+  line-height:1.6;
+}
+.parts-note{font-size:.82rem; color:var(--ink-soft); line-height:1.85}
+.parts-note b{color:var(--ink); font-weight:700}
+@media (max-width:520px){
+  .parts li{grid-template-columns:1fr; gap:.15rem}
+}
 
 /* grids */
 .grid{
@@ -966,16 +980,25 @@ footer .credit{margin-top:.4rem; font-size:.72rem; opacity:.75}
           <p class="release-sub">Alibiちゃんの、がんばりすぎないAI生存戦略</p>
           <h3>AI時代、だるいけど生き残る。</h3>
           <p>最先端を追わなくても、ちゃんと強くなれる現実的な考え方。<br>
-             難しい技術はわからなくてOK。現場で使える考え方だけ、ゆるく解説します。</p>
-          <ul class="toc">
-            <li>AI時代に焦らなくていい理由</li>
-            <li>AIに仕事を奪われない人の共通点</li>
-            <li>AI活用のリアルな考え方</li>
-            <li>情報中毒にならない方法</li>
-            <li>AIツールより大事なスキル</li>
-            <li>明日から使える実践Tips</li>
-            <li class="extra">Alibiちゃんのぐずぐずコラムも収録</li>
+             読む人の立ち位置ごとに、AIを<span class="em">使う／組み込む／つくる</span>の三部構成です。</p>
+          <!-- 本の骨格は「誰向けか」で分かれた三部。話題の羅列より先にこれを見せる -->
+          <ul class="parts">
+            <li>
+              <span class="k">PART 01</span>
+              <span><b>AIを使う人</b><span class="who">非エンジニア向け</span></span>
+            </li>
+            <li>
+              <span class="k">PART 02</span>
+              <span><b>AIを組み込む人</b><span class="who">AI活用エンジニア向け</span></span>
+            </li>
+            <li>
+              <span class="k">PART 03</span>
+              <span><b>AIをつくる人</b><span class="who">AIエンジニア向け ／ 上級編は論文形式</span></span>
+            </li>
           </ul>
+          <p class="parts-note">PART 00 に Alibiちゃんの自己紹介と導入漫画、各所に<b>ぐずぐずコラム</b>を収録。<br>
+             扱う話題は、焦らなくていい理由 ／ 仕事を奪われない人の共通点 ／ AI活用のリアル ／
+             情報中毒にならない方法 ／ ツールより大事なスキル ／ 明日から使える実践Tips。</p>
           <ul class="spec">
             <li><b>EVENT</b><span>コミックマーケット109</span></li>
             <li><b>DATE</b><span class="tbd">2026 冬 — 詳細は決定次第</span></li>
